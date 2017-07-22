@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava",
     "start": "$(npm bin)/babel-node ./src/index.js"
   },
   "author": "",
@@ -17,5 +17,32 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0"
+  },
+  "ava": {
+    "require": "babel-register",
+    "babel": {
+      "babelrc": true
+    },
+    "files": [
+      "**/*.test.js",
+      "!dist/**/*.test.js"
+    ]
+  },
+  "nyc": {
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false,
+    "check-coverage": false,
+    "include": [
+      "src/**/*.js"
+    ],
+    "cache": true,
+    "all": true
+  },
+  "devDependencies": {
+    "ava": "^0.21.0",
+    "nyc": "^11.0.3"
   }
 }
