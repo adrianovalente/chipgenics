@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "ava",
-    "start": "$(npm bin)/babel-node ./src/index.js"
+    "test": "nyc ava",
+    "start": "$(npm bin)/babel-node ./src/index.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "author": "",
   "license": "ISC",
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "ava": "^0.21.0",
+    "coveralls": "^2.13.1",
     "nyc": "^11.0.3"
   }
 }
