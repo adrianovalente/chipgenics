@@ -42,3 +42,13 @@ test('instruction 0x7XNN should increment program counter', t => {
     0x202
   )
 })
+
+test('instruction 0x8XY0 should the value stored in Y to X', t => {
+  t.is(
+    new Chip8({debug: true})
+      .load([0x63ab, 0x8430])
+      .execute(2)
+      .registers[4],
+    0xab
+  )
+})

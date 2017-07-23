@@ -6,7 +6,8 @@ const CHIP_8_REGISTERS_LENGTH = 16
 const OpCodes = {
   UNCONDITIONAL_JUMP : 1,
   LOAD_VALUE         : 6,
-  ADD_VALUE          : 7
+  ADD_VALUE          : 7,
+  BIT_OPERATIONS     : 8
 }
 
 
@@ -70,6 +71,17 @@ export default class Chip8 {
       case OpCodes.ADD_VALUE:
         this.registers[(instruction & 0x0f00) >> 8] += (instruction & 0x00ff)
         return this._incrementProgramCounter()
+
+      case OpCodes.BIT_OPERATIONS:
+        switch (instruction & 0x000f) {
+          case 0:
+            this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x00f0) >> 4]
+            return this._incrementProgramCounter()
+
+          default:
+            throw new Error(`unimplemented instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
+
+          }
 
       default:
         throw new Error(`unimplemented instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
