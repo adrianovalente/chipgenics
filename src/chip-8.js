@@ -38,10 +38,14 @@ export default class Chip8 {
     return this
   }
 
+  execute(n = 1) {
+    return (n > -1) ? this._execute(n - 1) : this
+  }
+
   /**
    * Executes a single instruction.
    */
-  execute() {
+  _execute() {
     const instruction = this.memory[this.pc]
     const firstDigit = (instruction & 0xf000) >> 12
 
