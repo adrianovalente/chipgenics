@@ -1,11 +1,11 @@
 # CHIP-8 Emulator
 
 [![Build Status](https://travis-ci.org/adrianovalente/chip8-emulator.svg?branch=master)](https://travis-ci.org/adrianovalente/chip8-emulator)
-[![Coverage Status](https://coveralls.io/repos/github/adrianovalente/chip8-emulator/badge.svg?branch=master)](https://coveralls.io/github/adrianovalente/chip8-emulator?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/adrianovalente/chip8-emulator/badge.svg)](https://coveralls.io/github/adrianovalente/chip8-emulator)
 
 > Hardware Emulation has always fascinated me.
 
-A lot of people say that [CHIP8](https://en.wikipedia.org/wiki/CHIP-8) is the easiest system to emulate, so I decided to write my own emulator using Node.JS.
+As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an easy system to get started writing emulators, I decided to accept the challenge.
 
 ## Contributing
 
