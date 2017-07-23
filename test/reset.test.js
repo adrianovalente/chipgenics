@@ -16,3 +16,12 @@ test('should empty the memory, apart from the first 0x200 positions', t => {
     new Array(0xe00).fill(0x0)
   )
 })
+
+test('should load a program properly', t => {
+  const program = [0x20, 0x18]
+  t.deepEqual(
+    new Chip8().load(program).memory.slice(0x200, 0x200 + program.length),
+    program
+  )
+
+})
