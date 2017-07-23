@@ -5,7 +5,8 @@ const CHIP_8_REGISTERS_LENGTH = 16
 
 const OpCodes = {
   UNCONDITIONAL_JUMP : 1,
-  LOAD_VALUE         : 6
+  LOAD_VALUE         : 6,
+  ADD_VALUE          : 7
 }
 
 
@@ -39,7 +40,11 @@ export default class Chip8 {
   }
 
   execute(n = 1) {
-    return (n > -1) ? this._execute(n - 1) : this
+    for (; n > 0; n--) { // TODO find a better way to implement it
+      this._execute()
+    }
+
+    return this
   }
 
   /**
@@ -60,6 +65,10 @@ export default class Chip8 {
 
       case OpCodes.LOAD_VALUE:
         this.registers[(instruction & 0x0f00) >> 8] = (instruction & 0x00ff)
+        return this._incrementProgramCounter()
+
+      case OpCodes.ADD_VALUE:
+        this.registers[(instruction & 0x0f00) >> 8] += (instruction & 0x00ff)
         return this._incrementProgramCounter()
 
       default:
