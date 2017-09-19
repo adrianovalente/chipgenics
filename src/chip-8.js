@@ -1,6 +1,7 @@
 const CHIP_8_MEMORY_LENGTH = 4096
 const CHIP_8_STACK_LENGTH = 16
 const CHIP_8_REGISTERS_LENGTH = 16
+const CHIP_8_VF_INDEX = 15
 
 
 const OpCodes = {
@@ -69,7 +70,11 @@ export default class Chip8 {
         return this._incrementProgramCounter()
 
       case OpCodes.ADD_VALUE:
-        this.registers[(instruction & 0x0f00) >> 8] += (instruction & 0x00ff)
+        const sum = this.registers[(instruction & 0x0f00) >> 8] + (instruction & 0x00ff)
+
+        // carry out is set to VF
+        this.registers[CHIP_8_VF_INDEX] = sum > 0xff ? 1 : 0
+        this.registers[(instruction & 0x0f00) >> 8] = sum % 0x100
         return this._incrementProgramCounter()
 
       case OpCodes.BIT_OPERATIONS:
