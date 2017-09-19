@@ -51,6 +51,36 @@ test('instruction 0x7XNN should increment program counter', t => {
   )
 })
 
+test('instruction 0x8XY1 should perform logic OR', t => {
+  t.is(
+    new Chip8()
+      .load([0x6305, 0x6403, 0x8341])
+      .execute(3)
+      .registers[3],
+    0x07
+  )
+})
+
+test('instruction 0x8XY2 should perform logic AND', t => {
+  t.is(
+    new Chip8()
+      .load([0x6307, 0x6402, 0x8342])
+      .execute(3)
+      .registers[3],
+    0x02
+  )
+})
+
+test('instruction 0x8XY3 should perform logic XOR', t => {
+  t.is(
+    new Chip8()
+      .load([0x630c, 0x640a, 0x8343])
+      .execute(3)
+      .registers[3],
+    0x06
+  )
+})
+
 test('instruction 0x8XY0 should the value stored in Y to X', t => {
   t.is(
     new Chip8()
