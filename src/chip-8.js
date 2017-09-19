@@ -83,6 +83,26 @@ export default class Chip8 {
             this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x00f0) >> 4]
             return this._incrementProgramCounter()
 
+          case 1:
+            this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x0f00) >> 8] | this.registers[(instruction & 0x00f0) >> 4]
+            return this._incrementProgramCounter()
+
+          case 2:
+            this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x0f00) >> 8] & this.registers[(instruction & 0x00f0) >> 4]
+            return this._incrementProgramCounter()
+
+          case 3:
+            this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x0f00) >> 8] ^ this.registers[(instruction & 0x00f0) >> 4]
+            return this._incrementProgramCounter()
+
+          case 4: // TODO Carry in
+            this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x0f00) >> 8] + this.registers[(instruction & 0x00f0) >> 4]
+            return this._incrementProgramCounter()
+
+          case 5: // TODO Carry
+            this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x0f00) >> 8] - this.registers[(instruction & 0x00f0) >> 4]
+            return this._incrementProgramCounter()
+
           default:
             throw new Error(`unimplemented instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
 
