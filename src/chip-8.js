@@ -72,8 +72,6 @@ export default class Chip8 {
       case OpCodes.ADD_VALUE:
         const sum = this.registers[(instruction & 0x0f00) >> 8] + (instruction & 0x00ff)
 
-        // carry out is set to VF
-        this.registers[CHIP_8_VF_INDEX] = sum > 0xff ? 1 : 0
         this.registers[(instruction & 0x0f00) >> 8] = sum % 0x100
         return this._incrementProgramCounter()
 
@@ -96,7 +94,13 @@ export default class Chip8 {
             return this._incrementProgramCounter()
 
           case 4: // TODO Carry in
-            this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x0f00) >> 8] + this.registers[(instruction & 0x00f0) >> 4]
+            const sum = this.registers[(instruction & 0x0f00) >> 8] + this.registers[(instruction & 0x00f0) >> 4]
+
+            // setting carry to VF
+            this.registers[CHIP_8_VF_INDEX] = sum > 0x100 ? 0x1 : 0x0
+
+            // taking care that maybe the result is higher than 256
+            this.registers[(instruction & 0x0f00) >> 8] = sum % 0x100
             return this._incrementProgramCounter()
 
           case 5: // TODO Carry
