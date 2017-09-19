@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc ava",
+    "test:watch": "ava --watch --verbose",
     "start": "$(npm bin)/babel-node ./src/index.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
