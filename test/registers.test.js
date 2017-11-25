@@ -109,3 +109,11 @@ test('instruction 0x8XY4 should set carry out to the VF register', t => {
   t.is(processor.registers[15], 0x1)
 
 })
+
+test('instruction 0x8XY5 should set VX to VX minus VY', t => {
+  const processor = new Chip8()
+    .load([0x6310, 0x6401, 0x8345])
+    .execute(3)
+
+  t.is(processor.registers[3], 0xf)
+})

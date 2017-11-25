@@ -103,6 +103,15 @@ export default class Chip8 {
             this.registers[(instruction & 0x0f00) >> 8] = sum % 0x100
             return this._incrementProgramCounter()
 
+          case 5:
+            const res = this.registers[(instruction & 0x0f00) >> 8] - this.registers[(instruction & 0x00f0) >> 4]
+
+            // setting borrow to VF
+            this.registers[CHIP_8_VF_INDEX] = res > 0 ? 0 : 1
+
+            this.registers[(instruction & 0x0f00) >> 8] = res > 0 ? res : 0x100 + res
+            return this._incrementProgramCounter()
+
           default:
             throw new Error(`unimplemented instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
 
@@ -121,9 +130,5 @@ export default class Chip8 {
     this.pc = this.pc + 1
     return this
   }
-
-
-
-
 
 }
