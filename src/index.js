@@ -1,1 +1,1 @@
-import Chip8 from './chip-8'
+module.exports = require('./chip-8')

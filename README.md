@@ -1,7 +1,6 @@
 # CHIP-8 Emulator
 
 [![Build Status](https://travis-ci.org/adrianovalente/chip8-emulator.svg?branch=master)](https://travis-ci.org/adrianovalente/chip8-emulator)
-[![Coverage Status](https://coveralls.io/repos/github/adrianovalente/chip8-emulator/badge.svg)](https://coveralls.io/github/adrianovalente/chip8-emulator)
 
 > Hardware Emulation has always fascinated me.
 

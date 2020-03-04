@@ -10,7 +10,7 @@ const OpCodes = {
   BIT_OPERATIONS     : 8
 }
 
-export default class Chip8 {
+class Chip8 {
 
   constructor(opts = {}) {
     this.backgroundColor = opts.backgroundColor || 'black'
@@ -120,8 +120,6 @@ export default class Chip8 {
     return this
   }
 
-
-
-
-
 }
+
+module.exports = Chip8
