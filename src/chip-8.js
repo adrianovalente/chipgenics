@@ -3,14 +3,12 @@ const CHIP_8_STACK_LENGTH = 16
 const CHIP_8_REGISTERS_LENGTH = 16
 const CHIP_8_VF_INDEX = 15
 
-
 const OpCodes = {
   UNCONDITIONAL_JUMP : 1,
   LOAD_VALUE         : 6,
   ADD_VALUE          : 7,
   BIT_OPERATIONS     : 8
 }
-
 
 export default class Chip8 {
 
