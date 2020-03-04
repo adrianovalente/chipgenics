@@ -1,51 +1,15 @@
 {
   "name": "chip-8-emulator",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A CHIP-8 emulator written in Node.JS",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava",
-    "test:watch": "ava --watch --verbose",
-    "start": "$(npm bin)/babel-node ./src/index.js",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-plugin-istanbul": "^4.1.4",
-    "babel-plugin-syntax-class-properties": "^6.13.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.0"
-  },
-  "ava": {
-    "require": "babel-register",
-    "babel": {
-      "babelrc": true
-    },
-    "files": [
-      "**/*.test.js",
-      "!dist/**/*.test.js"
-    ]
-  },
-  "nyc": {
-    "require": [
-      "babel-register"
-    ],
-    "sourceMap": false,
-    "instrument": false,
-    "check-coverage": false,
-    "include": [
-      "src/**/*.js"
-    ],
-    "cache": true,
-    "all": true
-  },
+  "dependencies": {},
   "devDependencies": {
-    "ava": "^0.21.0",
-    "coveralls": "^2.13.1",
-    "nyc": "^11.0.3"
+    "jest": "^25.1.0"
   }
 }
