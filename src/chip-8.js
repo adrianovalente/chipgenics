@@ -1,25 +1,24 @@
 const CHIP_8_MEMORY_LENGTH = 4096
-const CHIP_8_STACK_LENGTH = 16
+// const CHIP_8_STACK_LENGTH = 16
 const CHIP_8_REGISTERS_LENGTH = 16
 const CHIP_8_VF_INDEX = 0xf
 
 const OpCodes = {
-  UNCONDITIONAL_JUMP : 1,
-  LOAD_VALUE         : 6,
-  ADD_VALUE          : 7,
-  BIT_OPERATIONS     : 8
+  UNCONDITIONAL_JUMP: 1,
+  LOAD_VALUE: 6,
+  ADD_VALUE: 7,
+  BIT_OPERATIONS: 8
 }
 
 class Chip8 {
-
-  constructor(opts = {}) {
+  constructor (opts = {}) {
     this.backgroundColor = opts.backgroundColor || 'black'
     this.pixelColor = opts.pixelColor || 'white'
     this.debug = typeof opts.debug !== 'undefined' ? opts.debug : false
     this.reset()
   }
 
-  reset() {
+  reset () {
     this.stack = []
 
     // Positions from 0 to 0x200 are reserved to hardcoded sprites
@@ -31,7 +30,7 @@ class Chip8 {
     return this
   }
 
-  load(program) {
+  load (program) {
     for (var i = 0; i < program.length; i++) {
       this.memory[0x200 + i] = program[i]
     }
@@ -39,7 +38,7 @@ class Chip8 {
     return this
   }
 
-  execute(n = 1) {
+  execute (n = 1) {
     for (; n > 0; n--) { // TODO find a better way to implement it
       this._execute()
     }
@@ -50,9 +49,9 @@ class Chip8 {
   /**
    * Executes a single instruction.
    */
-  _execute() {
+  _execute () {
     const instruction = this.memory[this.pc]
-    const firstDigit = (instruction & 0xf000) >> 12
+    // const firstDigit = (instruction & 0xf000) >> 12
 
     if (this.debug) {
       console.log(`PC: 0x${this.pc.toString(16)}, executing instruction: 0x${instruction.toString(16)}`)
@@ -75,6 +74,7 @@ class Chip8 {
 
       case OpCodes.BIT_OPERATIONS:
         switch (instruction & 0x000f) {
+          // store
           case 0:
             this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x00f0) >> 4]
             return this._incrementProgramCounter()
@@ -103,23 +103,17 @@ class Chip8 {
 
           default:
             throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
-
-          }
+        }
 
       default:
         throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
-
-
     }
-
-
   }
 
-  _incrementProgramCounter() {
+  _incrementProgramCounter () {
     this.pc = this.pc + 1
     return this
   }
-
 }
 
 module.exports = Chip8
