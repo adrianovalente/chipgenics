@@ -1,3 +1,5 @@
+/* eslint-disable no-case-declarations */
+
 const CHIP_8_MEMORY_LENGTH = 4096
 // const CHIP_8_STACK_LENGTH = 16
 const CHIP_8_REGISTERS_LENGTH = 16
