@@ -1,7 +1,7 @@
 const CHIP_8_MEMORY_LENGTH = 4096
 const CHIP_8_STACK_LENGTH = 16
 const CHIP_8_REGISTERS_LENGTH = 16
-const CHIP_8_VF_INDEX = 15
+const CHIP_8_VF_INDEX = 0xf
 
 const OpCodes = {
   UNCONDITIONAL_JUMP : 1,
@@ -95,19 +95,19 @@ class Chip8 {
             const sum = this.registers[(instruction & 0x0f00) >> 8] + this.registers[(instruction & 0x00f0) >> 4]
 
             // setting carry to VF
-            this.registers[CHIP_8_VF_INDEX] = sum > 0x100 ? 0x1 : 0x0
+            this.registers[CHIP_8_VF_INDEX] = sum > 0xff ? 0x1 : 0x0
 
             // taking care that maybe the result is higher than 256
             this.registers[(instruction & 0x0f00) >> 8] = sum % 0x100
             return this._incrementProgramCounter()
 
           default:
-            throw new Error(`unimplemented instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
+            throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
 
           }
 
       default:
-        throw new Error(`unimplemented instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
+        throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
 
 
     }
