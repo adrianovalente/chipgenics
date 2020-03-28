@@ -29,7 +29,7 @@ As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an
   Set VF to 01 if a borrow does not occur
 - [x] 8XY6	Store the value of register VY shifted right one bit in register VX
   Set register VF to the least significant bit prior to the shift
-- [ ] 8XY7	Set register VX to the value of VY minus VX
+- [x] 8XY7	Set register VX to the value of VY minus VX
   Set VF to 00 if a borrow occurs
   Set VF to 01 if a borrow does not occur
 - [ ] 8XYE	Store the value of register VY shifted left one bit in register VX

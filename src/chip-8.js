@@ -53,7 +53,7 @@ class Chip8 {
    */
   _execute () {
     const instruction = this.memory[this.pc]
-    // const firstDigit = (instruction & 0xf000) >> 12
+    let diff, borrow // 🌈
 
     if (this.debug) {
       console.log(`PC: 0x${this.pc.toString(16)}, executing instruction: 0x${instruction.toString(16)}`)
@@ -104,8 +104,8 @@ class Chip8 {
             return this._incrementProgramCounter()
 
           case 5:
-            const diff = this.registers[(instruction & 0x0f00) >> 8] - this.registers[(instruction & 0x00f0) >> 4]
-            const borrow = diff < 0
+            diff = this.registers[(instruction & 0x0f00) >> 8] - this.registers[(instruction & 0x00f0) >> 4]
+            borrow = diff < 0
 
             this.registers[(instruction & 0x0f00) >> 8] = borrow ? diff + 0x100 : diff
             this.registers[CHIP_8_VF_INDEX] = borrow ? 0 : 1
@@ -115,6 +115,15 @@ class Chip8 {
           case 6:
             this.registers[CHIP_8_VF_INDEX] = this.registers[(instruction & 0x00f0) >> 4] & 0x0001
             this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x00f0) >> 4] >> 1
+            return this._incrementProgramCounter()
+
+          case 7:
+            diff = this.registers[(instruction & 0x00f0) >> 4] - this.registers[(instruction & 0x0f00) >> 8]
+            borrow = diff < 0
+
+            this.registers[(instruction & 0x0f00) >> 8] = borrow ? diff + 0x100 : diff
+            this.registers[CHIP_8_VF_INDEX] = borrow ? 0 : 1
+
             return this._incrementProgramCounter()
 
           default:
