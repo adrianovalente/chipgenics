@@ -7,6 +7,7 @@ const CHIP_8_VF_INDEX = 0xf
 
 const OpCodes = {
   UNCONDITIONAL_JUMP: 1,
+  CONDITIONAL_JUMP: 9,
   LOAD_VALUE: 6,
   ADD_VALUE: 7,
   BIT_OPERATIONS: 8
@@ -63,6 +64,11 @@ class Chip8 {
       case OpCodes.UNCONDITIONAL_JUMP:
         this.pc = instruction & 0x0fff
         return this
+
+      case OpCodes.CONDITIONAL_JUMP:
+        return this.registers[(instruction & 0x0f00) >> 8] !== this.registers[(instruction & 0x00f0) >> 4]
+          ? this._incrementProgramCounter()._incrementProgramCounter()
+          : this._incrementProgramCounter()
 
       case OpCodes.LOAD_VALUE:
         this.registers[(instruction & 0x0f00) >> 8] = (instruction & 0x00ff)
