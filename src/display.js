@@ -66,7 +66,28 @@ module.exports = class Screen {
     return anyPixelsWereUnset
   }
 
+  drawBytes (x, y, bytes) {
+    let anyPixelsWereUnset = false
+
+    for (let i = 0; i < bytes.length; i++) {
+      anyPixelsWereUnset = this.drawByte(x, y + i, bytes[i]) || anyPixelsWereUnset
+    }
+
+    return anyPixelsWereUnset
+  }
+
   snapshot () {
     return this.pixels
+  }
+
+  render () {
+    let str = ''
+    for (let i = 0; i < DISPLAY_HEIGHT; i++) {
+      for (let j = 0; j < DISPLAY_WIDTH; j++) {
+        str += this.pixels[i][j] ? 'o' : ' '
+      }
+      str += '\n'
+    }
+    return str
   }
 }
