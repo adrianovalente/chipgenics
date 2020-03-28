@@ -13,7 +13,8 @@ const OpCodes = {
   ADD_VALUE: 7,
   BIT_OPERATIONS: 8,
   JUMP_IF_DOES_NOT_MATCH_REGISTER: 9,
-  SET_REGISTER_I: 0xA
+  SET_REGISTER_I: 0xa,
+  JUMP_NNN: 0xb
 }
 
 class Chip8 {
@@ -74,6 +75,10 @@ class Chip8 {
     switch ((instruction & 0xf000) >> 12) {
       case OpCodes.UNCONDITIONAL_JUMP:
         this.pc = instruction & 0x0fff
+        return this
+
+      case OpCodes.JUMP_NNN:
+        this.pc = this.registers[0] + nnnValue
         return this
 
       case OpCodes.JUMP_IF_DOES_NOT_MATCH_REGISTER: return this._jumpIf(this.registers[x] !== this.registers[y])

@@ -32,3 +32,9 @@ test('5XY0	Skip the following instruction if the value of register VX is equal t
   expect(new Chip8().load([0x630a, 0x640a, instruction]).execute(3).pc).toBe(0x204)
   expect(new Chip8().load([0x630a, 0x640b, instruction]).execute(3).pc).toBe(0x203)
 })
+
+test('BNNN Jump to address NNN + V0', () => {
+  const instruction = 0xb523 // skip to position 0x523 + v0
+
+  expect(new Chip8().load([0x6002, instruction]).execute(2).pc).toBe(0x525)
+})
