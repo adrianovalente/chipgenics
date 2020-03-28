@@ -37,7 +37,7 @@ As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an
 - [x] 9XY0	Skip the following instruction if the value of register VX is not equal to the value of register VY
 - [x] ANNN	Store memory address NNN in register I
 - [x] BNNN	Jump to address NNN + V0
-- [ ] CXNN	Set VX to a random number with a mask of NN
+- [x] CXNN	Set VX to a random number with a mask of NN
 - [ ] DXYN	Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I
   Set VF to 01 if any set pixels are changed to unset, and 00 otherwise
 - [ ] EX9E	Skip the following instruction if the key corresponding to the hex value currently stored in register VX is pressed

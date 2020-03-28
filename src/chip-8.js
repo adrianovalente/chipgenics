@@ -14,7 +14,8 @@ const OpCodes = {
   BIT_OPERATIONS: 8,
   JUMP_IF_DOES_NOT_MATCH_REGISTER: 9,
   SET_REGISTER_I: 0xa,
-  JUMP_NNN: 0xb
+  JUMP_NNN: 0xb,
+  RANDOM_NUMBER: 0xc
 }
 
 class Chip8 {
@@ -100,6 +101,10 @@ class Chip8 {
 
       case OpCodes.SET_REGISTER_I:
         this.i = nnnValue
+        return this._incrementProgramCounter()
+
+      case OpCodes.RANDOM_NUMBER:
+        this.registers[x] = Math.floor(Math.random() * 0x00ff) & value
         return this._incrementProgramCounter()
 
       case OpCodes.BIT_OPERATIONS:
