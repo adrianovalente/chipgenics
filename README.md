@@ -12,7 +12,7 @@ As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an
 - [ ] 00EE	Return from a subroutine
 - [x] 1NNN	Jump to address NNN
 - [ ] 2NNN	Execute subroutine starting at address NNN
-- [ ] 3XNN	Skip the following instruction if the value of register VX equals NN
+- [x] 3XNN	Skip the following instruction if the value of register VX equals NN
 - [ ] 4XNN	Skip the following instruction if the value of register VX is not equal to NN
 - [ ] 5XY0	Skip the following instruction if the value of register VX is equal to the value of register VY
 - [x] 6XNN	Store number NN in register VX

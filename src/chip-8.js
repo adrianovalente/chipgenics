@@ -7,6 +7,7 @@ const CHIP_8_VF_INDEX = 0xf
 
 const OpCodes = {
   UNCONDITIONAL_JUMP: 1,
+  JUMP_IF_MATCHES_VALUE: 3,
   CONDITIONAL_JUMP: 9,
   LOAD_VALUE: 6,
   ADD_VALUE: 7,
@@ -56,6 +57,9 @@ class Chip8 {
     const instruction = this.memory[this.pc]
     let diff, borrow // 🌈
 
+    const x = (instruction & 0x0f00) >> 8
+    // const y = (instruction & 0x00f0) >> 4
+
     if (this.debug) {
       console.log(`PC: 0x${this.pc.toString(16)}, executing instruction: 0x${instruction.toString(16)}`)
     }
@@ -67,6 +71,11 @@ class Chip8 {
 
       case OpCodes.CONDITIONAL_JUMP:
         return this.registers[(instruction & 0x0f00) >> 8] !== this.registers[(instruction & 0x00f0) >> 4]
+          ? this._incrementProgramCounter()._incrementProgramCounter()
+          : this._incrementProgramCounter()
+
+      case OpCodes.JUMP_IF_MATCHES_VALUE:
+        return this.registers[x] === (instruction & 0x00ff)
           ? this._incrementProgramCounter()._incrementProgramCounter()
           : this._incrementProgramCounter()
 
