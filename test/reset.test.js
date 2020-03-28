@@ -9,13 +9,12 @@ test('should empty the program counter', () => {
 })
 
 test('should empty the memory, apart from the first 0x200 positions', () => {
-  expect(new Chip8().reset().memory.slice(0x200))
+  expect(new Chip8().reset().memory.snapshot().slice(0x200))
     .toEqual(new Array(0xe00).fill(0x0))
 })
 
 test('should load a program properly', () => {
   const program = [0x20, 0x18]
-  expect(new Chip8().load(program).memory.slice(0x200, 0x200 + program.length))
+  expect(new Chip8().load(program).memory.snapshot().slice(0x200, 0x200 + program.length))
     .toEqual(program)
-
 })

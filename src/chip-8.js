@@ -1,6 +1,6 @@
+const Memory = require('./memory')
 /* eslint-disable no-case-declarations */
 
-const CHIP_8_MEMORY_LENGTH = 4096
 const CHIP_8_REGISTERS_LENGTH = 16
 const CHIP_8_VF_INDEX = 0xf
 
@@ -18,14 +18,12 @@ const OpCodes = {
 }
 
 class Chip8 {
-  constructor (opts = {}) {
-    this.backgroundColor = opts.backgroundColor || 'black'
-    this.pixelColor = opts.pixelColor || 'white'
-    this.debug = typeof opts.debug !== 'undefined' ? opts.debug : false
-    this.reset()
+  constructor ({ memory } = {}, { debug } = {}) {
+    this.debug = typeof debug !== 'undefined' && debug
+    this.reset(memory)
   }
 
-  reset () {
+  reset (memory) {
     this.stack = []
 
     // Positions from 0 to 0x200 are reserved to hardcoded sprites
@@ -34,17 +32,24 @@ class Chip8 {
     // The `i` register is used to access memory
     this.i = 0
 
-    this.memory = new Array(CHIP_8_MEMORY_LENGTH).fill(0x0)
+    if (!memory) {
+      // console.warn('Memory instantiation inside processor is deprecated, it should be injected as dependency instead')
+      this.memory = new Memory({ debug: this.debug })
+    } else {
+      this.memory = memory
+    }
+
     this.registers = new Array(CHIP_8_REGISTERS_LENGTH).fill(0x0)
 
     return this
   }
 
+  /*
+   * DEPRECATED
+   * @TODO inject external memory component instead of loading program here
+   */
   load (program) {
-    for (var i = 0; i < program.length; i++) {
-      this.memory[0x200 + i] = program[i]
-    }
-
+    this.memory.loadProgram(program)
     return this
   }
 
@@ -56,11 +61,8 @@ class Chip8 {
     return this
   }
 
-  /**
-   * Executes a single instruction.
-   */
   _execute () {
-    const instruction = this.memory[this.pc]
+    const instruction = this.memory.get(this.pc)
     let sum, diff, borrow // 🌈
 
     const x = (instruction & 0x0f00) >> 8
