@@ -12,7 +12,8 @@ const OpCodes = {
   LOAD_VALUE: 6,
   ADD_VALUE: 7,
   BIT_OPERATIONS: 8,
-  JUMP_IF_DOES_NOT_MATCH_REGISTER: 9
+  JUMP_IF_DOES_NOT_MATCH_REGISTER: 9,
+  SET_REGISTER_I: 0xA
 }
 
 class Chip8 {
@@ -28,6 +29,9 @@ class Chip8 {
 
     // Positions from 0 to 0x200 are reserved to hardcoded sprites
     this.pc = 0x200
+
+    // The `i` register is used to access memory
+    this.i = 0
 
     this.memory = new Array(CHIP_8_MEMORY_LENGTH).fill(0x0)
     this.registers = new Array(CHIP_8_REGISTERS_LENGTH).fill(0x0)
@@ -61,6 +65,7 @@ class Chip8 {
     const x = (instruction & 0x0f00) >> 8
     const y = (instruction & 0x00f0) >> 4
     const value = instruction & 0x00ff
+    const nnnValue = instruction & 0x0fff
 
     if (this.debug) {
       console.log(`PC: 0x${this.pc.toString(16)}, executing instruction: 0x${instruction.toString(16)}`)
@@ -84,6 +89,10 @@ class Chip8 {
         sum = this.registers[x] + value
 
         this.registers[x] = sum % 0x100
+        return this._incrementProgramCounter()
+
+      case OpCodes.SET_REGISTER_I:
+        this.i = nnnValue
         return this._incrementProgramCounter()
 
       case OpCodes.BIT_OPERATIONS:
