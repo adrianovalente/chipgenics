@@ -67,3 +67,23 @@ test('8XY5	Subtract the value of register VY from register VX [when borrow occur
   expect(processor.registers[6]).toBe(0xcd)
   expect(processor.registers[15]).toBe(0)
 })
+
+test('8XY6	Store the value of register VY shifted right one bit in register VX', () => {
+  const processor = new Chip8()
+        .load([0x6403, 0x8346])
+        .execute(2)
+
+  expect(processor.registers[3]).toBe(1)
+  expect(processor.registers[4]).toBe(3)
+  expect(processor.registers[15]).toBe(1)
+})
+
+test('8XY6	Store the value of register VY shifted right one bit in register VX [2]', () => {
+  const processor = new Chip8()
+        .load([0x6404, 0x8346])
+        .execute(2)
+
+  expect(processor.registers[3]).toBe(2)
+  expect(processor.registers[4]).toBe(4)
+  expect(processor.registers[15]).toBe(0)
+})
