@@ -126,6 +126,11 @@ class Chip8 {
 
             return this._incrementProgramCounter()
 
+          case 0x000e:
+            this.registers[CHIP_8_VF_INDEX] = (this.registers[(instruction & 0x00f0) >> 4] & 0x80) >> 7
+            this.registers[(instruction & 0x0f00) >> 8] = (this.registers[(instruction & 0x00f0) >> 4] << 1) % 0x100
+            return this._incrementProgramCounter()
+
           default:
             throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
         }
