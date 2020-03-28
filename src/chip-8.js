@@ -93,11 +93,11 @@ class Chip8 {
             this.registers[(instruction & 0x0f00) >> 8] = this.registers[(instruction & 0x0f00) >> 8] ^ this.registers[(instruction & 0x00f0) >> 4]
             return this._incrementProgramCounter()
 
-          case 4: // TODO Carry in
+          case 4:
             const sum = this.registers[(instruction & 0x0f00) >> 8] + this.registers[(instruction & 0x00f0) >> 4]
 
             // setting carry to VF
-            this.registers[CHIP_8_VF_INDEX] = sum > 0xff ? 0x1 : 0x0
+            this.registers[CHIP_8_VF_INDEX] = sum > 0xff ? 1 : 0
 
             // taking care that maybe the result is higher than 256
             this.registers[(instruction & 0x0f00) >> 8] = sum % 0x100

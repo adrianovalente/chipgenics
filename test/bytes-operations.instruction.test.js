@@ -28,12 +28,13 @@ test('instruction 0x8XY0 should the value stored in Y to X', () => {
       .execute(2)
       .registers[4]).toBe(0xab)})
 
-test('instruction 0x8XY4 should add value stored in X to Y', () => {
+test('instruction 0x8XY4 should add the value of register VY to register VX', () => {
   const processor = new Chip8()
     .load([0x63ab, 0x6401, 0x8344])
     .execute(3)
 
   expect(processor.registers[3]).toBe(0xac)
+  expect(processor.registers[4]).toBe(0x01)
   expect(processor.registers[15]).toBe(0x0)
 })
 
@@ -43,5 +44,6 @@ test('instruction 0x8XY4 should set carry out to the VF register', () => {
     .execute(3)
 
   expect(processor.registers[3]).toBe(0x57)
+  expect(processor.registers[4]).toBe(0xac)
   expect(processor.registers[15]).toBe(0x1)
 })
