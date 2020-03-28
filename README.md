@@ -14,7 +14,7 @@ As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an
 - [ ] 2NNN	Execute subroutine starting at address NNN
 - [x] 3XNN	Skip the following instruction if the value of register VX equals NN
 - [x] 4XNN	Skip the following instruction if the value of register VX is not equal to NN
-- [ ] 5XY0	Skip the following instruction if the value of register VX is equal to the value of register VY
+- [x] 5XY0	Skip the following instruction if the value of register VX is equal to the value of register VY
 - [x] 6XNN	Store number NN in register VX
 - [x] 7XNN	Add the value NN to register VX
 - [x] 8XY0	Store the value of register VY in register VX

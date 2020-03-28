@@ -9,6 +9,7 @@ const OpCodes = {
   UNCONDITIONAL_JUMP: 1,
   JUMP_IF_MATCHES_VALUE: 3,
   JUMP_IF_DOES_NOT_MATCH_VALUE: 4,
+  JUMP_IF_MATCHES_REGISTER: 5,
   CONDITIONAL_JUMP: 9,
   LOAD_VALUE: 6,
   ADD_VALUE: 7,
@@ -59,7 +60,7 @@ class Chip8 {
     let diff, borrow // 🌈
 
     const x = (instruction & 0x0f00) >> 8
-    // const y = (instruction & 0x00f0) >> 4
+    const y = (instruction & 0x00f0) >> 4
 
     if (this.debug) {
       console.log(`PC: 0x${this.pc.toString(16)}, executing instruction: 0x${instruction.toString(16)}`)
@@ -82,6 +83,11 @@ class Chip8 {
 
       case OpCodes.JUMP_IF_DOES_NOT_MATCH_VALUE:
         return this.registers[x] !== (instruction & 0x00ff)
+          ? this._incrementProgramCounter()._incrementProgramCounter()
+          : this._incrementProgramCounter()
+
+      case OpCodes.JUMP_IF_MATCHES_REGISTER:
+        return this.registers[x] === this.registers[y]
           ? this._incrementProgramCounter()._incrementProgramCounter()
           : this._incrementProgramCounter()
 

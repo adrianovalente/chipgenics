@@ -25,3 +25,10 @@ test('4XNN	Skip the following instruction if the value of register VX is not equ
   expect(new Chip8().load([0x6344, instruction]).execute(2).pc).toBe(0x202)
   expect(new Chip8().load([0x6343, instruction]).execute(2).pc).toBe(0x203)
 })
+
+test('5XY0	Skip the following instruction if the value of register VX is equal to the value of register VY', () => {
+  const instruction = 0x5340 // skip the following instruction if v3 == v4
+
+  expect(new Chip8().load([0x630a, 0x640a, instruction]).execute(3).pc).toBe(0x204)
+  expect(new Chip8().load([0x630a, 0x640b, instruction]).execute(3).pc).toBe(0x203)
+})
