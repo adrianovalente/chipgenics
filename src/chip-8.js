@@ -103,6 +103,15 @@ class Chip8 {
             this.registers[(instruction & 0x0f00) >> 8] = sum % 0x100
             return this._incrementProgramCounter()
 
+          case 5:
+          const diff = this.registers[(instruction & 0x0f00) >> 8] - this.registers[(instruction & 0x00f0) >> 4]
+          const borrow = diff < 0
+
+          this.registers[(instruction & 0x0f00) >> 8] = borrow ? diff + 0x100 : diff
+          this.registers[CHIP_8_VF_INDEX] = borrow ? 0 : 1
+
+          return this._incrementProgramCounter()
+
           default:
             throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
         }

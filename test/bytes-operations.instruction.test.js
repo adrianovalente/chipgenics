@@ -47,3 +47,23 @@ test('instruction 0x8XY4 should set carry out to the VF register', () => {
   expect(processor.registers[4]).toBe(0xac)
   expect(processor.registers[15]).toBe(0x1)
 })
+
+test('8XY5	Subtract the value of register VY from register VX', () => {
+  const processor = new Chip8()
+        .load([0x63ab, 0x06601, 0x8365]) // X = 3, Y = 6
+        .execute(3)
+
+  expect(processor.registers[3]).toBe(0xaa)
+  expect(processor.registers[6]).toBe(0x01)
+  expect(processor.registers[15]).toBe(1)
+})
+
+test('8XY5	Subtract the value of register VY from register VX [when borrow occurs]', () => {
+  const processor = new Chip8()
+        .load([0x63ab, 0x066cd, 0x8365])
+        .execute(3)
+
+  expect(processor.registers[3]).toBe(0xde)
+  expect(processor.registers[6]).toBe(0xcd)
+  expect(processor.registers[15]).toBe(0)
+})
