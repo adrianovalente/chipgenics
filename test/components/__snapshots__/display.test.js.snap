@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sprite rendering snapshot 1`] = `
+"  o   oooo                                                      
+ oo      o                                                      
+  o   oooo                                                      
+  o   o                                                         
+ ooo  oooo                                                      
+                                                                
+                                                                
+      oooo                                                      
+         o                                                      
+      oooo                                                      
+         o                                                      
+      oooo                                                      
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+"
+`;
