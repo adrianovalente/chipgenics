@@ -11,7 +11,7 @@ describe('00E0	Clear the screen', () => {
     const processor = new Chip8({
       memory: new Memory().loadProgram([instruction]),
       display: new Display()
-    }).execute()
+    }).play()
 
     expect(display.render().match(/o/g)).toBeUndefined
   })

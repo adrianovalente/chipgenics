@@ -20,7 +20,7 @@ describe('9XY0  Skip the following instruction if the value of register VX is no
       memory: new Memory({
         program: [0x6304, 0x6404, instruction]
       })
-    }).execute(3)
+    }).play()
 
     expect(processor.pc).toBe(0x203)
   })
@@ -30,7 +30,7 @@ describe('9XY0  Skip the following instruction if the value of register VX is no
       memory: new Memory({
         program: [0x6304, 0x6405, instruction]
       })
-    }).execute(3)
+    }).play()
 
     expect(processor.pc).toBe(0x204)
   })
@@ -44,7 +44,7 @@ describe('3XNN  Skip the following instruction if the value of register VX equal
       memory: new Memory({
         program: [0x6343, instruction]
       })
-    }).execute(2)
+    }).play()
 
     expect(processor.pc).toBe(0x202)
   })
@@ -54,7 +54,7 @@ describe('3XNN  Skip the following instruction if the value of register VX equal
       memory: new Memory({
         program: [0x6344, instruction]
       })
-    }).execute(2)
+    }).play()
 
     expect(processor.pc).toBe(0x203)
   })
@@ -68,7 +68,7 @@ describe('4XNN	Skip the following instruction if the value of register VX is not
       memory: new Memory({
         program: [0x6344, instruction]
       })
-    }).execute(2)
+    }).play()
 
     expect(processor.pc).toBe(0x202)
   })
@@ -78,7 +78,7 @@ describe('4XNN	Skip the following instruction if the value of register VX is not
       memory: new Memory({
         program: [0x6343, instruction]
       })
-    }).execute(2)
+    }).play()
 
     expect(processor.pc).toBe(0x203)
   })
@@ -92,7 +92,7 @@ describe('5XY0	Skip the following instruction if the value of register VX is equ
       memory: new Memory({
         program: [0x630a, 0x640a, instruction]
       })
-    }).execute(3)
+    }).play()
 
     expect(processor.pc).toBe(0x204)
   })
@@ -102,7 +102,7 @@ describe('5XY0	Skip the following instruction if the value of register VX is equ
       memory: new Memory({
         program: [0x630a, 0x640b, instruction]
       })
-    }).execute(3)
+    }).play()
 
     expect(processor.pc).toBe(0x203)
   })
@@ -116,7 +116,7 @@ describe('BNNN Jump to address NNN + V0', () => {
       memory: new Memory({
         program: [0x6002, instruction]
       })
-    }).execute(2)
+    }).play()
 
     expect(processor.pc).toBe(0x525)
   })

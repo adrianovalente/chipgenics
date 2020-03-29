@@ -41,6 +41,14 @@ class Chip8 {
     return this
   }
 
+  play () {
+    while (this.memory.get(this.pc) !== 0x0000) {
+      this._execute()
+    }
+
+    return this
+  }
+
   execute (n = 1) {
     for (; n > 0; n--) { // TODO find a better way to implement it
       this._execute()

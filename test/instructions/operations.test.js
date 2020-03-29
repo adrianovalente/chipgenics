@@ -7,7 +7,7 @@ describe('8XY1	Set VX to VX OR VY', () => {
     memory: new Memory({
       program: [0x6305, 0x6403, 0x8341]
     })
-  }).execute(3)
+  }).play()
 
   test('registers are properly set', () => {
     expect(processor.registers[3]).toBe(0x07)
@@ -21,7 +21,7 @@ describe('8XY2	Set VX to VX AND VY', () => {
     memory: new Memory({
       program: [0x6307, 0x6402, instruction]
     })
-  }).execute(3)
+  }).play()
 
   test('registers are properly set', () => {
     expect(processor.registers[3]).toBe(0x02)
@@ -35,7 +35,7 @@ describe('8XY3	Set VX to VX XOR VY', () => {
     memory: new Memory({
       program: [0x630c, 0x640a, instruction]
     })
-  }).execute(3)
+  }).play()
 
   test('resgisters are properly set', () => {
     expect(processor.registers[3]).toBe(0x06)
@@ -49,7 +49,7 @@ describe('8XY0	Store the value of register VY in register VX', () => {
     memory: new Memory({
       program: [0x63ab, instruction]
     })
-  }).execute(2)
+  }).play()
 
   test('registers are properly set', () => {
     expect(processor.registers[4]).toBe(0xab)
@@ -66,7 +66,7 @@ describe('8XY4	Add the value of register VY to register VX', () => {
         program: [0x63ab, 0x6401
                   , instruction]
       })
-    }).execute(3)
+    }).play()
 
     expect(processor.registers[3]).toBe(0xac)
     expect(processor.registers[4]).toBe(0x01)
@@ -78,7 +78,7 @@ describe('8XY4	Add the value of register VY to register VX', () => {
       memory: new Memory({
         program: [0x63ab, 0x64ac, instruction]
       })
-    }).execute(3)
+    }).play()
 
     expect(processor.registers[3]).toBe(0x57)
     expect(processor.registers[4]).toBe(0xac)
@@ -94,7 +94,7 @@ describe('8XY5	Subtract the value of register VY from register VX', () => {
       memory: new Memory({
         program: [0x63ab, 0x06601, instruction]
       })
-    }).execute(3)
+    }).play()
 
     expect(processor.registers[3]).toBe(0x00aa)
     expect(processor.registers[6]).toBe(0x0001)
@@ -106,7 +106,7 @@ describe('8XY5	Subtract the value of register VY from register VX', () => {
       memory: new Memory({
         program: [0x63ab, 0x066cd, instruction]
       })
-    }).execute(3)
+    }).play()
 
     expect(processor.registers[3]).toBe(0x00de)
     expect(processor.registers[6]).toBe(0x00cd)
@@ -122,7 +122,7 @@ describe('8XY6	Store the value of register VY shifted right one bit in register 
       memory: new Memory({
         program: [0x6403, instruction]
       })
-    }).execute(2)
+    }).play()
 
     expect(processor.registers[3]).toBe(1)
     expect(processor.registers[4]).toBe(3)
@@ -134,7 +134,7 @@ describe('8XY6	Store the value of register VY shifted right one bit in register 
       memory: new Memory({
         program: [0x6404, instruction]
       })
-    }).execute(2)
+    }).play()
 
     expect(processor.registers[3]).toBe(2)
     expect(processor.registers[4]).toBe(4)
@@ -148,7 +148,7 @@ describe('8XY7	Set register VX to the value of VY minus VX', () => {
   test('when there is no borrow', () => {
     const processor = new Chip8({
       memory: new Memory({ program: [0x6310, 0x6402, instruction] })
-    }).execute(3)
+    }).play()
 
     expect(processor.registers[4]).toBe(14)
     expect(processor.registers[3]).toBe(16)
@@ -158,7 +158,7 @@ describe('8XY7	Set register VX to the value of VY minus VX', () => {
   test('when there is borrow', () => {
     const processor = new Chip8({
       memory: new Memory({ program: [0x6310, 0x641a, instruction]})
-    }).execute(3)
+    }).play()
 
     expect(processor.registers[4]).toBe(0x00f6)
     expect(processor.registers[3]).toBe(0x0010)
@@ -172,7 +172,7 @@ describe('8XYE	Store the value of register VY shifted left one bit in register V
   test('when MSB is not set', () => {
     const processor = new Chip8({
       memory: new Memory({ program: [0x6403, instruction] })
-    }).execute(2)
+    }).play()
 
     expect(processor.registers[3]).toBe(6)
     expect(processor.registers[4]).toBe(3)
@@ -182,7 +182,7 @@ describe('8XYE	Store the value of register VY shifted left one bit in register V
   test('when MSM is set', () => {
     const processor = new Chip8({
       memory: new Memory({ program: [0x64fa, instruction] })
-    }).execute(2)
+    }).play()
 
     expect(processor.registers[3]).toBe(0x00f4)
     expect(processor.registers[4]).toBe(0x00fa)
@@ -198,7 +198,7 @@ describe('7XNN	Add the value NN to register VX', () => {
       memory: new Memory({
         program: [0x63ab, instruction]
       })
-    }).execute(2)
+    }).play()
 
     expect(processor.registers[3]).toBe(0xbc)
     expect(processor.registers[15]).toBe(0x00)
@@ -210,7 +210,7 @@ describe('7XNN	Add the value NN to register VX', () => {
       memory: new Memory({
         program: [0x63ab, instruction]
       })
-    }).execute(2)
+    }).play()
 
     expect(processor.registers[3]).toBe(0x56)
     expect(processor.registers[15]).toBe(0x00)

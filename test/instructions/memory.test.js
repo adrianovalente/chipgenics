@@ -7,7 +7,7 @@ describe('ANNN	Store memory address NNN in register I', () => {
     memory: new Memory({
       program: [instruction]
     })
-  }).execute(1)
+  }).execute()
 
   test('program counter is properly set', () => expect(processor.pc).toBe(0x201))
   test('the I register is properly set', () => expect(processor.i).toBe(0x123))
