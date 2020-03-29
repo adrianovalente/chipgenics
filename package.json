@@ -6,8 +6,9 @@
   "scripts": {
     "coverage": "npm t -- --coverage",
     "lint": "eslint src/",
-    "test": "jest",
-    "pretest": "npm run lint"
+    "test": "jest --verbose",
+    "pretest": "npm run lint",
+    "watch": "jest --watch"
   },
   "author": "",
   "license": "ISC",

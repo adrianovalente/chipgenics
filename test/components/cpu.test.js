@@ -1,20 +1,18 @@
 const Chip8 = require('../../src/chip-8')
+const Memory = require('../../src/memory')
 
-test('should empty the stack', () => {
-  expect(new Chip8().reset().stack).toEqual([])
-})
+describe('CPU reset', () => {
+  const memory = new Memory({
+    program: [0x610a, 0x5678, 0x9abc]
+  })
 
-test('should empty the program counter', () => {
-  expect(new Chip8().reset().pc).toBe(0x200)
-})
+  const processor = new Chip8({
+    memory
+  }).execute().reset()
 
-test('should empty the memory, apart from the first 0x200 positions', () => {
-  expect(new Chip8().reset().memory.snapshot().slice(0x200))
-    .toEqual(new Array(0xe00).fill(0x0))
-})
+  test('should empty the stack', () => expect(processor.stack).toEqual([]))
+  test('should reset the program counter', () => expect(processor.pc).toBe(0x0200))
 
-test('should load a program properly', () => {
-  const program = [0x20, 0x18]
-  expect(new Chip8().load(program).memory.snapshot().slice(0x200, 0x200 + program.length))
-    .toEqual(program)
+  // Is this really expected?
+  // test('should reset memory addresses higher than 0x0200', () => expect(memory.snapshot().slice(0x0200)).toEqual(new Array(0xe00).fill(0x0)))
 })

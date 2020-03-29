@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`sprite rendering snapshot 1`] = `
+exports[`Sprite rendering snapshot rendered display matches snapshot 📸 1`] = `
 "  o   oooo                                                      
  oo      o                                                      
   o   oooo                                                      

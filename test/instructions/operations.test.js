@@ -1,7 +1,7 @@
 const Chip8 = require('../../src/chip-8')
 const Memory = require('../../src/memory')
 
-test('8XY1	Set VX to VX OR VY', () => {
+describe('8XY1	Set VX to VX OR VY', () => {
   const instruction = 0x8341 // v3 = v3 || v4
   const processor = new Chip8({
     memory: new Memory({
@@ -9,11 +9,13 @@ test('8XY1	Set VX to VX OR VY', () => {
     })
   }).execute(3)
 
-  expect(processor.registers[3]).toBe(0x07)
-  expect(processor.registers[4]).toBe(0x03)
+  test('registers are properly set', () => {
+    expect(processor.registers[3]).toBe(0x07)
+    expect(processor.registers[4]).toBe(0x03)
+  })
 })
 
-test('8XY2	Set VX to VX AND VY', () => {
+describe('8XY2	Set VX to VX AND VY', () => {
   const instruction = 0x8342 // v3 = v3 && v4
   const processor = new Chip8({
     memory: new Memory({
@@ -21,11 +23,13 @@ test('8XY2	Set VX to VX AND VY', () => {
     })
   }).execute(3)
 
-  expect(processor.registers[3]).toBe(0x02)
-  expect(processor.registers[4]).toBe(0x02)
+  test('registers are properly set', () => {
+    expect(processor.registers[3]).toBe(0x02)
+    expect(processor.registers[4]).toBe(0x02)
+  })
 })
 
-test('8XY3	Set VX to VX XOR VY', () => {
+describe('8XY3	Set VX to VX XOR VY', () => {
   const instruction = 0x8343 // v3 = v3 XOR v4
   const processor = new Chip8({
     memory: new Memory({
@@ -33,11 +37,13 @@ test('8XY3	Set VX to VX XOR VY', () => {
     })
   }).execute(3)
 
-  expect(processor.registers[3]).toBe(0x06)
-  expect(processor.registers[4]).toBe(0x0a)
+  test('resgisters are properly set', () => {
+    expect(processor.registers[3]).toBe(0x06)
+    expect(processor.registers[4]).toBe(0x0a)
+  })
 })
 
-test('8XY0	Store the value of register VY in register VX', () => {
+describe('8XY0	Store the value of register VY in register VX', () => {
   const instruction = 0x8430 // v4 <~ v3
   const processor = new Chip8({
     memory: new Memory({
@@ -45,8 +51,10 @@ test('8XY0	Store the value of register VY in register VX', () => {
     })
   }).execute(2)
 
-  expect(processor.registers[4]).toBe(0xab)
-  expect(processor.registers[3]).toBe(0xab)
+  test('registers are properly set', () => {
+    expect(processor.registers[4]).toBe(0xab)
+    expect(processor.registers[3]).toBe(0xab)
+  })
 })
 
 describe('8XY4	Add the value of register VY to register VX', () => {
@@ -55,7 +63,8 @@ describe('8XY4	Add the value of register VY to register VX', () => {
   test('without carry out', () => {
     const processor = new Chip8({
       memory: new Memory({
-        program: [0x63ab, 0x6401, instruction]
+        program: [0x63ab, 0x6401
+                  , instruction]
       })
     }).execute(3)
 

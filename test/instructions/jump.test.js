@@ -1,40 +1,123 @@
 const Chip8 = require('../../src/chip-8')
+const Memory = require('../../src/memory')
 
-test('instruction 1NNN should jump to NNN position', () => {
+describe('1NNN Jump to address NNN', () => {
   const instruction = 0x1abc // jump to 0xabc
-  expect(new Chip8().load([instruction]).execute().pc).toBe(0xABC)
+  const processor = new Chip8({
+    memory: new Memory({
+      program: [instruction]
+    })
+  }).execute()
+
+  test('program counter is properly set', () => expect(processor.pc).toBe(0xabc))
 })
 
-test('9XY0  Skip the following instruction if the value of register VX is not equal to the value of register VY', () => {
+describe('9XY0  Skip the following instruction if the value of register VX is not equal to the value of register VY', () => {
   const instruction = 0x9340 // skip the following instruction if v4 != v5
 
-  expect(new Chip8().load([0x6304, 0x6404, instruction]).execute(3).pc).toBe(0x203)
-  expect(new Chip8().load([0x6304, 0x6405, instruction]).execute(3).pc).toBe(0x204)
+  test('when does not jump', () => {
+    const processor = new Chip8({
+      memory: new Memory({
+        program: [0x6304, 0x6404, instruction]
+      })
+    }).execute(3)
+
+    expect(processor.pc).toBe(0x203)
+  })
+
+  test('when jumps', () => {
+    const processor = new Chip8({
+      memory: new Memory({
+        program: [0x6304, 0x6405, instruction]
+      })
+    }).execute(3)
+
+    expect(processor.pc).toBe(0x204)
+  })
 })
 
-test('3XNN  Skip the following instruction if the value of register VX equals NN', () => {
+describe('3XNN  Skip the following instruction if the value of register VX equals NN', () => {
   const instruction = 0x3344 // skip the following instruction if v3 = 0x44
 
-  expect(new Chip8().load([0x6343, instruction]).execute(2).pc).toBe(0x202)
-  expect(new Chip8().load([0x6344, instruction]).execute(2).pc).toBe(0x203)
+  test('when does not jump', () => {
+    const processor = new Chip8({
+      memory: new Memory({
+        program: [0x6343, instruction]
+      })
+    }).execute(2)
+
+    expect(processor.pc).toBe(0x202)
+  })
+
+  test('when jumps', () => {
+    const processor = new Chip8({
+      memory: new Memory({
+        program: [0x6344, instruction]
+      })
+    }).execute(2)
+
+    expect(processor.pc).toBe(0x203)
+  })
 })
 
-test('4XNN	Skip the following instruction if the value of register VX is not equal to NN', () => {
+describe('4XNN	Skip the following instruction if the value of register VX is not equal to NN', () => {
   const instruction = 0x4344 // skip the following instruction if v3 != 0x44
 
-  expect(new Chip8().load([0x6344, instruction]).execute(2).pc).toBe(0x202)
-  expect(new Chip8().load([0x6343, instruction]).execute(2).pc).toBe(0x203)
+  test('when does not jump', () => {
+    const processor = new Chip8({
+      memory: new Memory({
+        program: [0x6344, instruction]
+      })
+    }).execute(2)
+
+    expect(processor.pc).toBe(0x202)
+  })
+
+  test('when jumps', () => {
+    const processor = new Chip8({
+      memory: new Memory({
+        program: [0x6343, instruction]
+      })
+    }).execute(2)
+
+    expect(processor.pc).toBe(0x203)
+  })
 })
 
-test('5XY0	Skip the following instruction if the value of register VX is equal to the value of register VY', () => {
+describe('5XY0	Skip the following instruction if the value of register VX is equal to the value of register VY', () => {
   const instruction = 0x5340 // skip the following instruction if v3 == v4
 
-  expect(new Chip8().load([0x630a, 0x640a, instruction]).execute(3).pc).toBe(0x204)
-  expect(new Chip8().load([0x630a, 0x640b, instruction]).execute(3).pc).toBe(0x203)
+  test('when jumps', () => {
+    const processor = new Chip8({
+      memory: new Memory({
+        program: [0x630a, 0x640a, instruction]
+      })
+    }).execute(3)
+
+    expect(processor.pc).toBe(0x204)
+  })
+
+  test('when does not jump', () => {
+    const processor = new Chip8({
+      memory: new Memory({
+        program: [0x630a, 0x640b, instruction]
+      })
+    }).execute(3)
+
+    expect(processor.pc).toBe(0x203)
+  })
 })
 
-test('BNNN Jump to address NNN + V0', () => {
+describe('BNNN Jump to address NNN + V0', () => {
   const instruction = 0xb523 // skip to position 0x523 + v0
 
-  expect(new Chip8().load([0x6002, instruction]).execute(2).pc).toBe(0x525)
+  test('when jumps', () => {
+    const processor = new Chip8({
+      memory: new Memory({
+        program: [0x6002, instruction]
+      })
+    }).execute(2)
+
+    expect(processor.pc).toBe(0x525)
+  })
 })

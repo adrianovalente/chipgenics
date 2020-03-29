@@ -1,9 +1,14 @@
 const Chip8 = require('../../src/chip-8')
+const Memory = require('../../src/memory')
 
-test('ANNN	Store memory address NNN in register I', () => {
-  const instruction = 0xA123 // sets hex value 0x123 to I
-  const processor = new Chip8().load([instruction]).execute(1)
+describe('ANNN	Store memory address NNN in register I', () => {
+  const instruction = 0xa123 // sets hex value 0x123 to I
+  const processor = new Chip8({
+    memory: new Memory({
+      program: [instruction]
+    })
+  }).execute(1)
 
-  expect(processor.pc).toBe(0x201)
-  expect(processor.i).toBe(0x123)
+  test('program counter is properly set', () => expect(processor.pc).toBe(0x201))
+  test('the I register is properly set', () => expect(processor.i).toBe(0x123))
 })
