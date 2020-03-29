@@ -49,3 +49,9 @@ describe('DXYN	Draw a sprite at position VX, VY with N bytes of sprite data star
     expect(processor.registers[15]).toBe(1) // actually erased some pixels
   })
 })
+
+describe('FX29	Set I to the memory address of the sprite data corresponding to the hexadecimal digit stored in register VX', () => {
+  const instruction = 0xf329
+
+  expect(new Chip8({ memory: new Memory().loadProgram([0x6302, instruction])}).execute(2).i).toBe(0x000a)
+})

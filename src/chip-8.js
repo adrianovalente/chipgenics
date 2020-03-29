@@ -17,7 +17,8 @@ const OpCodes = {
   SET_REGISTER_I: 0xa,
   JUMP_NNN: 0xb,
   RANDOM_NUMBER: 0xc,
-  DRAW: 0xd
+  DRAW: 0xd,
+  SPECIAL_OPERATORS: 0xf
 }
 
 class Chip8 {
@@ -124,6 +125,16 @@ class Chip8 {
         switch (instruction & 0x00ff) {
           case 0x00e0:
             this.display.reset()
+            return this._incrementProgramCounter()
+
+          default:
+            throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
+        }
+
+      case OpCodes.SPECIAL_OPERATORS:
+        switch (instruction & 0x00ff) {
+          case 0x0029:
+            this.i = this.memory.getSpriteMemoryPosition(this.registers[x])
             return this._incrementProgramCounter()
 
           default:
