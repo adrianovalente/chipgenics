@@ -1,6 +1,4 @@
-const Memory = require('./memory')
 /* eslint-disable no-case-declarations */
-
 const CHIP_8_REGISTERS_LENGTH = 16
 const CHIP_8_VF_INDEX = 0xf
 
@@ -24,11 +22,12 @@ const OpCodes = {
 class Chip8 {
   constructor ({ memory, display } = {}, { debug } = {}) {
     this.debug = typeof debug !== 'undefined' && debug
+    this.memory = memory
     this.display = display
-    this.reset(memory)
+    this.reset()
   }
 
-  reset (memory) {
+  reset () {
     this.stack = []
 
     // Positions from 0 to 0x200 are reserved to hardcoded sprites
@@ -37,24 +36,16 @@ class Chip8 {
     // The `i` register is used to access memory
     this.i = 0
 
-    if (!memory) {
-      // console.warn('Memory instantiation inside processor is deprecated, it should be injected as dependency instead')
-      this.memory = new Memory({ debug: this.debug })
-    } else {
-      this.memory = memory
-    }
-
     this.registers = new Array(CHIP_8_REGISTERS_LENGTH).fill(0x0)
 
     return this
   }
 
-  /*
-   * DEPRECATED
-   * @TODO inject external memory component instead of loading program here
-   */
-  load (program) {
-    this.memory.loadProgram(program)
+  play () {
+    while (this.memory.get(this.pc) !== 0x0000) {
+      this._execute()
+    }
+
     return this
   }
 
@@ -72,7 +63,7 @@ class Chip8 {
 
     const x = (instruction & 0x0f00) >> 8
     const y = (instruction & 0x00f0) >> 4
-    const value = instruction & 0x00ff
+    const nnValue = instruction & 0x00ff
     const nnnValue = instruction & 0x0fff
 
     if (this.debug) {
@@ -94,11 +85,11 @@ class Chip8 {
       case OpCodes.JUMP_IF_MATCHES_REGISTER: return this._jumpIf(this.registers[x] === this.registers[y])
 
       case OpCodes.LOAD_VALUE:
-        this.registers[x] = value
+        this.registers[x] = nnValue
         return this._incrementProgramCounter()
 
       case OpCodes.ADD_VALUE:
-        sum = this.registers[x] + value
+        sum = this.registers[x] + nnValue
 
         this.registers[x] = sum % 0x100
         return this._incrementProgramCounter()
@@ -108,7 +99,7 @@ class Chip8 {
         return this._incrementProgramCounter()
 
       case OpCodes.RANDOM_NUMBER:
-        this.registers[x] = Math.floor(Math.random() * 0x00ff) & value
+        this.registers[x] = Math.floor(Math.random() * 0x00ff) & nnValue
         return this._incrementProgramCounter()
 
       case OpCodes.DRAW:

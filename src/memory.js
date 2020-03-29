@@ -20,9 +20,13 @@ const HEX_CHAR_SPRITES = [
 ]
 
 module.exports = class Memory {
-  constructor ({ debug } = {}) {
+  constructor ({ debug, program } = {}) {
     this.debug = typeof debug !== 'undefined' && debug
     this.reset()
+
+    if (program) {
+      this.loadProgram(program)
+    }
   }
 
   reset () {

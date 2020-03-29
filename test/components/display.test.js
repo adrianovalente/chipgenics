@@ -1,6 +1,6 @@
 const Display = require('../../src/display')
 
-describe('drawing a simple line (byte) on the screen', () => {
+describe('Drawing a simple line (byte) on the screen', () => {
   const display = new Display()
   const bytesToDraw = 0b01101101
   let pixelsErased = false
@@ -18,7 +18,7 @@ describe('drawing a simple line (byte) on the screen', () => {
   })
 })
 
-test('sprite rendering snapshot', () => {
+describe('Sprite rendering snapshot', () => {
   const display = new Display()
 
   const two = [0xf0, 0x10, 0xf0, 0x80, 0xf0]
@@ -29,5 +29,5 @@ test('sprite rendering snapshot', () => {
   display.drawBytes(6, 0, two)
   display.drawBytes(6, 7, three)
 
-  expect(display.render()).toMatchSnapshot()
+  test('rendered display matches snapshot 📸', () => expect(display.render()).toMatchSnapshot())
 })

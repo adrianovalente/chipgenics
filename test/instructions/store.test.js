@@ -1,5 +1,5 @@
-const Memory = require('../src/memory')
-const Chip8 = require('../src/chip-8')
+const Memory = require('../../src/memory')
+const Chip8 = require('../../src/chip-8')
 
 describe('6XNN	Store number NN in register VX', () => {
   const instruction = 0x63ab // sets value 0xab to register v3

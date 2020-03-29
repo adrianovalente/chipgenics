@@ -1,6 +1,6 @@
-const Display = require('../src/display')
-const Memory = require('../src/memory')
-const Chip8 = require('../src/chip-8')
+const Display = require('../../src/display')
+const Memory = require('../../src/memory')
+const Chip8 = require('../../src/chip-8')
 
 describe('00E0	Clear the screen', () => {
   const instruction = 0x00e0
@@ -11,7 +11,7 @@ describe('00E0	Clear the screen', () => {
     const processor = new Chip8({
       memory: new Memory().loadProgram([instruction]),
       display: new Display()
-    }).execute()
+    }).play()
 
     expect(display.render().match(/o/g)).toBeUndefined
   })

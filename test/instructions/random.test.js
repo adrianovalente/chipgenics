@@ -1,5 +1,5 @@
-const Memory = require('../src/memory')
-const Chip8 = require('../src/chip-8')
+const Memory = require('../../src/memory')
+const Chip8 = require('../../src/chip-8')
 
 const TEST_RUNS = 1E4
 
