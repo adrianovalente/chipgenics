@@ -16,7 +16,8 @@ const OpCodes = {
   JUMP_IF_DOES_NOT_MATCH_REGISTER: 9,
   SET_REGISTER_I: 0xa,
   JUMP_NNN: 0xb,
-  RANDOM_NUMBER: 0xc
+  RANDOM_NUMBER: 0xc,
+  DRAW: 0xd
 }
 
 class Chip8 {
@@ -107,6 +108,16 @@ class Chip8 {
 
       case OpCodes.RANDOM_NUMBER:
         this.registers[x] = Math.floor(Math.random() * 0x00ff) & value
+        return this._incrementProgramCounter()
+
+      case OpCodes.DRAW:
+        const anyBytesWereErased = this.display.drawBytes(
+          this.registers[x],
+          this.registers[y],
+          new Array(instruction & 0x000f).fill(0).map((_, b) => this.memory.get(this.i + b))
+        )
+
+        this.registers[CHIP_8_VF_INDEX] = anyBytesWereErased ? 1 : 0
         return this._incrementProgramCounter()
 
       case OpCodes.ZERO_OP_CODE:

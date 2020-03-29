@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DXYN	Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I draws sprites 2, 3, 4 to screen 1`] = `
+"                                                                
+                                                                
+  oooo                                                          
+     o                                                          
+  oooo                                                          
+  o                                                             
+  oooo                                                          
+  oooo                                                          
+     o                                                          
+  oooo                                                          
+     o                                                          
+  oooo                                                          
+  o  o                                                          
+  o  o                                                          
+  oooo                                                          
+     o                                                          
+     o                                                          
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+"
+`;
+
+exports[`DXYN	Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I erasing sprite for number 2 1`] = `
+"                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+  oooo                                                          
+     o                                                          
+  oooo                                                          
+     o                                                          
+  oooo                                                          
+  o  o                                                          
+  o  o                                                          
+  oooo                                                          
+     o                                                          
+     o                                                          
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+"
+`;
