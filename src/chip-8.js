@@ -169,6 +169,10 @@ class Chip8 {
 
       case OpCodes.SPECIAL_OPERATORS:
         switch (nnValue) {
+          case 0x0018:
+            console.warn('shhhhhhhhh')
+            return this._incrementProgramCounter()
+
           case 0x0029:
             this.i = this.memory.getSpriteMemoryPosition(this.registers[x])
             return this._incrementProgramCounter()
