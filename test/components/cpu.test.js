@@ -1,4 +1,4 @@
-const Chip8 = require('../src/chip-8')
+const Chip8 = require('../../src/chip-8')
 
 test('should empty the stack', () => {
   expect(new Chip8().reset().stack).toEqual([])

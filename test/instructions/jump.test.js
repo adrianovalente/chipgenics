@@ -1,4 +1,4 @@
-const Chip8 = require('../src/chip-8')
+const Chip8 = require('../../src/chip-8')
 
 test('instruction 1NNN should jump to NNN position', () => {
   const instruction = 0x1abc // jump to 0xabc

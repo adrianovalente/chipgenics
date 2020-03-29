@@ -1,4 +1,4 @@
-const Chip8 = require('../src/chip-8')
+const Chip8 = require('../../src/chip-8')
 
 test('ANNN	Store memory address NNN in register I', () => {
   const instruction = 0xA123 // sets hex value 0x123 to I

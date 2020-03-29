@@ -1,5 +1,6 @@
-const Memory = require('./memory')
 /* eslint-disable no-case-declarations */
+
+const Memory = require('./memory')
 
 const CHIP_8_REGISTERS_LENGTH = 16
 const CHIP_8_VF_INDEX = 0xf
@@ -38,7 +39,7 @@ class Chip8 {
     this.i = 0
 
     if (!memory) {
-      // console.warn('Memory instantiation inside processor is deprecated, it should be injected as dependency instead')
+      console.warn('Memory instantiation inside processor is deprecated, it should be injected as dependency instead')
       this.memory = new Memory({ debug: this.debug })
     } else {
       this.memory = memory

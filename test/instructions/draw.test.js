@@ -1,6 +1,6 @@
-const Display = require('../src/display')
-const Memory = require('../src/memory')
-const Chip8 = require('../src/chip-8')
+const Display = require('../../src/display')
+const Memory = require('../../src/memory')
+const Chip8 = require('../../src/chip-8')
 
 describe('00E0	Clear the screen', () => {
   const instruction = 0x00e0
