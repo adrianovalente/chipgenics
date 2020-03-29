@@ -33,3 +33,30 @@ describe('FX1E  Add the value stored in register VX to register I', () => {
     expect(processor.pc).toBe(0x0203)
   })
 })
+
+describe('FX33	Store the binary-coded decimal equivalent of the value stored in register VX at addresses I, I+1, and I+2', () => {
+  const instruction = 0xf333 // I <~ BCD(v3)
+
+  const memory = new Memory({
+    program: [
+      0xa100, // set I to 0x0100
+      0x63fb, // set v3 to 0x00fb
+
+      instruction
+    ]
+  })
+
+  const processor = new Chip8({ memory }).play()
+
+  test('i is not changed', () => {
+    expect(processor.i).toBe(0x100)
+  })
+
+  test('memory is set', () => {
+    expect([
+      memory.get(0x100),
+      memory.get(0x101),
+      memory.get(0x102)
+    ]).toEqual([2, 5, 1])
+  })
+})

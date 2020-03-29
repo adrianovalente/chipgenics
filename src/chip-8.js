@@ -176,6 +176,15 @@ class Chip8 {
             this.i += this.registers[x]
             return this._incrementProgramCounter()
 
+          case (0x0033):
+            this.registers[x].toString().padStart(3, '0').split('')
+              .map(n => parseInt(n))
+              .forEach((n, i) => {
+                this.memory.set(this.i + i, n)
+              })
+
+            return this._incrementProgramCounter()
+
           default:
             throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
         }
