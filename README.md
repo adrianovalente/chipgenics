@@ -8,7 +8,7 @@ As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an
 
 ## Instructions
 - [ ] 0NNN	Execute machine language subroutine at address NNN
-- [ ] 00E0	Clear the screen
+- [x] 00E0	Clear the screen
 - [ ] 00EE	Return from a subroutine
 - [x] 1NNN	Jump to address NNN
 - [ ] 2NNN	Execute subroutine starting at address NNN

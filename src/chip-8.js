@@ -5,6 +5,7 @@ const CHIP_8_REGISTERS_LENGTH = 16
 const CHIP_8_VF_INDEX = 0xf
 
 const OpCodes = {
+  ZERO_OP_CODE: 0,
   UNCONDITIONAL_JUMP: 1,
   JUMP_IF_MATCHES_VALUE: 3,
   JUMP_IF_DOES_NOT_MATCH_VALUE: 4,
@@ -19,8 +20,9 @@ const OpCodes = {
 }
 
 class Chip8 {
-  constructor ({ memory } = {}, { debug } = {}) {
+  constructor ({ memory, display } = {}, { debug } = {}) {
     this.debug = typeof debug !== 'undefined' && debug
+    this.display = display
     this.reset(memory)
   }
 
@@ -107,9 +109,18 @@ class Chip8 {
         this.registers[x] = Math.floor(Math.random() * 0x00ff) & value
         return this._incrementProgramCounter()
 
+      case OpCodes.ZERO_OP_CODE:
+        switch (instruction & 0x00ff) {
+          case 0x00e0:
+            this.display.reset()
+            return this._incrementProgramCounter()
+
+          default:
+            throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
+        }
+
       case OpCodes.BIT_OPERATIONS:
         switch (instruction & 0x000f) {
-          // store
           case 0:
             this.registers[x] = this.registers[y]
             return this._incrementProgramCounter()
