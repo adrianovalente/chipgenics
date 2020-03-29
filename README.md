@@ -49,9 +49,9 @@ As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an
 - [x] FX1E	Add the value stored in register VX to register I
 - [x] FX29	Set I to the memory address of the sprite data corresponding to the hexadecimal digit stored in register VX
 - [x] FX33	Store the binary-coded decimal equivalent of the value stored in register VX at addresses I, I+1, and I+2
-- [ ] FX55	Store the values of registers V0 to VX inclusive in memory starting at address I
+- [x] FX55	Store the values of registers V0 to VX inclusive in memory starting at address I
   I is set to I + X + 1 after operation
-- [ ] FX65	Fill registers V0 to VX inclusive with the values stored in memory starting at address I
+- [x] FX65	Fill registers V0 to VX inclusive with the values stored in memory starting at address I
   I is set to I + X + 1 after operation
 
 ## Contributing

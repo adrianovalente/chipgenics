@@ -176,13 +176,29 @@ class Chip8 {
             this.i += this.registers[x]
             return this._incrementProgramCounter()
 
-          case (0x0033):
+          case 0x0033:
             this.registers[x].toString().padStart(3, '0').split('')
               .map(n => parseInt(n))
               .forEach((n, i) => {
                 this.memory.set(this.i + i, n)
               })
 
+            return this._incrementProgramCounter()
+
+          case 0x0055:
+            for (let i = 0; i <= x; i++) {
+              this.memory.set(this.i + i, this.registers[i])
+            }
+
+            this.i = this.i + x + 1
+            return this._incrementProgramCounter()
+
+          case 0x0065:
+            for (let i = 0; i <= x; i++) {
+              this.registers[i] = this.memory.get(i + this.i)
+            }
+
+            this.i = this.i + x + 1
             return this._incrementProgramCounter()
 
           default:
