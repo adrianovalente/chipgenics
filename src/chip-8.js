@@ -1,10 +1,12 @@
 /* eslint-disable no-case-declarations */
 const CHIP_8_REGISTERS_LENGTH = 16
 const CHIP_8_VF_INDEX = 0xf
+const STACK_LENGTH = 1E3
 
 const OpCodes = {
   ZERO_OP_CODE: 0,
   UNCONDITIONAL_JUMP: 1,
+  SUBROUTINE: 2,
   JUMP_IF_MATCHES_VALUE: 3,
   JUMP_IF_DOES_NOT_MATCH_VALUE: 4,
   JUMP_IF_MATCHES_REGISTER: 5,
@@ -97,6 +99,14 @@ class Chip8 {
         this.pc = this.registers[0] + nnnValue
         return this
 
+      case OpCodes.SUBROUTINE:
+        if (this.stack.length > STACK_LENGTH) {
+          throw new Error('Stackoverflow: Max recursions reached')
+        }
+        this.stack.push(this.pc + 1)
+        this.pc = nnnValue
+        return this
+
       case OpCodes.JUMP_IF_DOES_NOT_MATCH_REGISTER: return this._jumpIf(this.registers[x] !== this.registers[y])
       case OpCodes.JUMP_IF_MATCHES_VALUE: return this._jumpIf(this.registers[x] === (instruction & 0x00ff))
       case OpCodes.JUMP_IF_DOES_NOT_MATCH_VALUE: return this._jumpIf(this.registers[x] !== (instruction & 0x00ff))
@@ -144,6 +154,14 @@ class Chip8 {
           case 0x00e0:
             this.display.reset()
             return this._incrementProgramCounter()
+
+          case 0x00ee:
+            if (this.stack.length < 1) {
+              throw new Error('There is no stacked PC to be popped')
+            }
+
+            this.pc = this.stack.pop()
+            return this
 
           default:
             throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)

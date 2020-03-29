@@ -9,9 +9,9 @@ As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an
 ## Instructions
 - [ ] ~0NNN	Execute machine language subroutine at address NNN~
 - [x] 00E0	Clear the screen
-- [ ] 00EE	Return from a subroutine
+- [x] 00EE	Return from a subroutine
 - [x] 1NNN	Jump to address NNN
-- [ ] 2NNN	Execute subroutine starting at address NNN
+- [x] 2NNN	Execute subroutine starting at address NNN
 - [x] 3XNN	Skip the following instruction if the value of register VX equals NN
 - [x] 4XNN	Skip the following instruction if the value of register VX is not equal to NN
 - [x] 5XY0	Skip the following instruction if the value of register VX is equal to the value of register VY
