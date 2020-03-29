@@ -16,18 +16,21 @@ const OpCodes = {
   JUMP_NNN: 0xb,
   RANDOM_NUMBER: 0xc,
   DRAW: 0xd,
+  KEYBOARD: 0xe,
   SPECIAL_OPERATORS: 0xf
 }
 
 class Chip8 {
-  constructor ({ memory, display } = {}, { debug } = {}) {
+  constructor ({ memory, display, keyboard } = {}, { debug } = {}) {
     this.debug = typeof debug !== 'undefined' && debug
     this.memory = memory
     this.display = display
+    this.keyboard = keyboard
     this.reset()
   }
 
   reset () {
+    this._isRunning = false
     this.stack = []
 
     // Positions from 0 to 0x200 are reserved to hardcoded sprites
@@ -41,9 +44,21 @@ class Chip8 {
     return this
   }
 
+  pause () {
+    if (this.debug) {
+      console.warn(`Execution paused, PC: 0x${this.pc.toString(16)}`)
+    }
+    this._isRunning = false
+    return this
+  }
+
   play () {
-    while (this.memory.get(this.pc) !== 0x0000) {
-      this._execute()
+    if (this.debug) {
+      console.info(`Execution started, PC: 0x${this.pc.toString(16)}`)
+    }
+    this._isRunning = true
+    while (this._isRunning && this.memory.get(this.pc) !== 0x0000) {
+      this._isRunning && this._execute()
     }
 
     return this
@@ -58,6 +73,7 @@ class Chip8 {
   }
 
   _execute () {
+    const self = this
     const instruction = this.memory.get(this.pc)
     let sum, diff, borrow // 🌈
 
@@ -112,8 +128,17 @@ class Chip8 {
         this.registers[CHIP_8_VF_INDEX] = anyBytesWereErased ? 1 : 0
         return this._incrementProgramCounter()
 
-      case OpCodes.ZERO_OP_CODE:
+      case OpCodes.KEYBOARD:
         switch (instruction & 0x00ff) {
+          case 0x009e: return this._jumpIf(parseInt(this.keyboard.pressedKey(), 16) === this.registers[x])
+          case 0x00a1: return this._jumpIf(parseInt(this.keyboard.pressedKey(), 16) !== this.registers[x])
+
+          default:
+            throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
+        }
+
+      case OpCodes.ZERO_OP_CODE:
+        switch (nnValue) {
           case 0x00e0:
             this.display.reset()
             return this._incrementProgramCounter()
@@ -123,9 +148,18 @@ class Chip8 {
         }
 
       case OpCodes.SPECIAL_OPERATORS:
-        switch (instruction & 0x00ff) {
+        switch (nnValue) {
           case 0x0029:
             this.i = this.memory.getSpriteMemoryPosition(this.registers[x])
+            return this._incrementProgramCounter()
+
+          case 0x000a:
+            this.pause()
+            this.keyboard.onKeyPress(k => {
+              self.registers[x] = parseInt(k, 16)
+              self.play()
+            })
+
             return this._incrementProgramCounter()
 
           default:

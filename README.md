@@ -40,10 +40,10 @@ As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an
 - [x] CXNN	Set VX to a random number with a mask of NN
 - [x] DXYN	Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I
   Set VF to 01 if any set pixels are changed to unset, and 00 otherwise
-- [ ] EX9E	Skip the following instruction if the key corresponding to the hex value currently stored in register VX is pressed
-- [ ] EXA1	Skip the following instruction if the key corresponding to the hex value currently stored in register VX is not pressed
+- [x] EX9E	Skip the following instruction if the key corresponding to the hex value currently stored in register VX is pressed
+- [x] EXA1	Skip the following instruction if the key corresponding to the hex value currently stored in register VX is not pressed
 - [ ] FX07	Store the current value of the delay timer in register VX
-- [ ] FX0A	Wait for a keypress and store the result in register VX
+- [x] FX0A	Wait for a keypress and store the result in register VX
 - [ ] FX15	Set the delay timer to the value of register VX
 - [ ] FX18	Set the sound timer to the value of register VX
 - [ ] FX1E	Add the value stored in register VX to register I
