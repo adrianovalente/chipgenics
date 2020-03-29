@@ -21,11 +21,13 @@ const OpCodes = {
 }
 
 class Chip8 {
-  constructor ({ memory, display, keyboard } = {}, { debug } = {}) {
+  constructor ({ memory, display, keyboard, timer } = {}, { debug } = {}) {
     this.debug = typeof debug !== 'undefined' && debug
     this.memory = memory
     this.display = display
     this.keyboard = keyboard
+    this.timer = timer
+
     this.reset()
   }
 
@@ -160,6 +162,14 @@ class Chip8 {
               self.play()
             })
 
+            return this._incrementProgramCounter()
+
+          case 0x0015:
+            this.timer.set(this.registers[x])
+            return this._incrementProgramCounter()
+
+          case 0x0007:
+            this.registers[x] = this.timer.get()
             return this._incrementProgramCounter()
 
           default:
