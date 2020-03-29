@@ -7,7 +7,7 @@
 As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an easy system to get started writing emulators, I decided to accept the challenge.
 
 ## Instructions
-- [ ] 0NNN	Execute machine language subroutine at address NNN
+- [ ] ~0NNN	Execute machine language subroutine at address NNN~
 - [x] 00E0	Clear the screen
 - [ ] 00EE	Return from a subroutine
 - [x] 1NNN	Jump to address NNN
@@ -46,7 +46,7 @@ As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an
 - [x] FX0A	Wait for a keypress and store the result in register VX
 - [x] FX15	Set the delay timer to the value of register VX
 - [ ] FX18	Set the sound timer to the value of register VX
-- [ ] FX1E	Add the value stored in register VX to register I
+- [x] FX1E	Add the value stored in register VX to register I
 - [x] FX29	Set I to the memory address of the sprite data corresponding to the hexadecimal digit stored in register VX
 - [ ] FX33	Store the binary-coded decimal equivalent of the value stored in register VX at addresses I, I+1, and I+2
 - [ ] FX55	Store the values of registers V0 to VX inclusive in memory starting at address I

@@ -12,8 +12,7 @@ describe('8XY1	Set VX to VX OR VY', () => {
   test('registers are properly set', () => {
     expect(processor.registers[3]).toBe(0x07)
     expect(processor.registers[4]).toBe(0x03)
-  })
-})
+  })})
 
 describe('8XY2	Set VX to VX AND VY', () => {
   const instruction = 0x8342 // v3 = v3 && v4

@@ -172,6 +172,10 @@ class Chip8 {
             this.registers[x] = this.timer.get()
             return this._incrementProgramCounter()
 
+          case 0x001e:
+            this.i += this.registers[x]
+            return this._incrementProgramCounter()
+
           default:
             throw new Error(`Unknown instruction: 0x${instruction.toString(16)}, PC: 0x${this.pc.toString(16)}`)
         }
