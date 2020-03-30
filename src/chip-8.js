@@ -23,13 +23,15 @@ const OpCodes = {
 }
 
 class Chip8 {
-  constructor ({ memory, display, keyboard, timer } = {}, { debug } = {}) {
+  constructor ({ memory, display, keyboard, timer, clock } = {}, { debug } = {}) {
     this.debug = typeof debug !== 'undefined' && debug
     this.memory = memory
     this.display = display
     this.keyboard = keyboard
     this.timer = timer
+    this.clock = clock
 
+    this.clock.reset()
     this.reset()
   }
 
@@ -53,17 +55,29 @@ class Chip8 {
       console.warn(`Execution paused, PC: 0x${this.pc.toString(16)}`)
     }
     this._isRunning = false
+    this.clock.reset()
     return this
   }
 
   play () {
+    const self = this
     if (this.debug) {
       console.info(`Execution started, PC: 0x${this.pc.toString(16)}`)
     }
     this._isRunning = true
+
+    this.clock.reset()
+    this.clock.tick(() => {
+      if (self._isRunning) {
+        self._execute()
+      }
+    })
+
+    /*
     while (this._isRunning && this.memory.get(this.pc) !== 0x0000) {
       this._isRunning && this._execute()
     }
+    */
 
     return this
   }
@@ -78,7 +92,7 @@ class Chip8 {
 
   _execute () {
     const self = this
-    const instruction = this.memory.get(this.pc)
+    const instruction = (this.memory.get(this.pc) << 8) | this.memory.get(this.pc + 1)
     let sum, diff, borrow // 🌈
 
     const x = (instruction & 0x0f00) >> 8
@@ -103,7 +117,7 @@ class Chip8 {
         if (this.stack.length > STACK_LENGTH) {
           throw new Error('Stackoverflow: Max recursions reached')
         }
-        this.stack.push(this.pc + 1)
+        this.stack.push(this.pc + 2)
         this.pc = nnnValue
         return this
 
@@ -137,11 +151,13 @@ class Chip8 {
           new Array(instruction & 0x000f).fill(0).map((_, b) => this.memory.get(this.i + b))
         )
 
+
         this.registers[CHIP_8_VF_INDEX] = anyBytesWereErased ? 1 : 0
         return this._incrementProgramCounter()
 
       case OpCodes.KEYBOARD:
         switch (instruction & 0x00ff) {
+
           case 0x009e: return this._jumpIf(parseInt(this.keyboard.pressedKey(), 16) === this.registers[x])
           case 0x00a1: return this._jumpIf(parseInt(this.keyboard.pressedKey(), 16) !== this.registers[x])
 
@@ -170,7 +186,6 @@ class Chip8 {
       case OpCodes.SPECIAL_OPERATORS:
         switch (nnValue) {
           case 0x0018:
-            console.warn('shhhhhhhhh')
             return this._incrementProgramCounter()
 
           case 0x0029:
@@ -293,12 +308,12 @@ class Chip8 {
   }
 
   _incrementProgramCounter () {
-    this.pc = this.pc + 1
+    this.pc = this.pc + 2
     return this
   }
 
   _jumpIf (condition) {
-    this.pc += condition ? 2 : 1
+    this.pc += condition ? 4 : 2
     return this
   }
 }
