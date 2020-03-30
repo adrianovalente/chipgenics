@@ -9,6 +9,7 @@ module.exports = class Screen {
 
   reset () {
     this.pixels = new Array(DISPLAY_HEIGHT).fill(0).map(() => new Array(DISPLAY_WIDTH).fill(0))
+    this._onClear && this._onClear()
     return this
   }
 
@@ -18,6 +19,14 @@ module.exports = class Screen {
     }
 
     return this.pixels[x][y]
+  }
+
+  onPixel (fn) {
+    this._onPixel = fn
+  }
+
+  onClear (fn) {
+    this._onClear = fn
   }
 
   /**
@@ -30,11 +39,14 @@ module.exports = class Screen {
    * @returns `1` if the pixel is set after the operation, `0` otherwise
    */
   set (x, y) {
+    const self = this
     if (x > DISPLAY_WIDTH || y > DISPLAY_HEIGHT) {
       throw new Error(`Chip8 display is limited to ${DISPLAY_WIDTH} x ${DISPLAY_HEIGHT}`)
     }
 
     this.pixels[y][x] ^= 1
+
+    this._onPixel && this._onPixel(x, y, this.pixels[y][x])
 
     if (this.debug) {
       console.info(`Pixel (${x}, ${y}) set to ${this.pixels[y][x]}`)
