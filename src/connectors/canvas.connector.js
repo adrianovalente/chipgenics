@@ -1,4 +1,4 @@
-class CanvasConnector {
+module.exports = class CanvasConnector {
   constructor (canvas) {
     if (!canvas) {
       throw new Error('Canvas not provided')
@@ -74,5 +74,3 @@ class CanvasConnector {
   }
 
 }
-
-global.CanvasConnector = CanvasConnector

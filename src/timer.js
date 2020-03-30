@@ -1,6 +1,7 @@
 module.exports = class Timer {
-  constructor (frequency = 60) {
-    this.frequency = frequency
+  constructor ({ frequency, passive } = {}) {
+    this.frequency = typeof frequency !== 'undefined' ? frequency : 60
+    this.passive = (typeof passive !== 'undefined') && passive
     this._reset()
   }
 
@@ -28,9 +29,12 @@ module.exports = class Timer {
     }
 
     self._value = 0
-    self.interval = setInterval(() => {
-      self._tick()
-    }, Math.floor(1000 / self.frequency))
+
+    if (!self.passive) {
+      self.interval = setInterval(() => {
+        self._tick()
+      }, Math.floor(1000 / self.frequency))
+    }
 
     return this
   }

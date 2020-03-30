@@ -8,9 +8,7 @@
     "lint": "eslint src/",
     "test": "jest --verbose",
     "pretest": "npm run lint",
-    "watch": "jest --watch",
-
-    "build": "browserify src/connectors/canvas.connector.js -o ../chip8-frontend/canvas-connector.js; browserify src/index.js -o ../chip8-frontend/bundle.js"
+    "watch": "jest --watch"
   },
   "author": "",
   "license": "ISC",

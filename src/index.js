@@ -5,6 +5,8 @@ module.exports.keyboards = require('./keyboard')
 module.exports.Memory = require('./memory')
 module.exports.Timer = require('./timer')
 
+module.exports.Canvas = require('./connectors/canvas.connector')
+
 // 🚢
 module.exports.invadors = require('/Users/drico/Desktop/invadors.js')
 
