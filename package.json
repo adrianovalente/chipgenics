@@ -8,18 +8,23 @@
     "lint": "eslint src/",
     "test": "jest --verbose",
     "pretest": "npm run lint",
-    "watch": "jest --watch"
+    "watch": "jest --watch",
+    "dev": "nodemon src/index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Adriano Valente <me@dri.cool>",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "clear": "^0.1.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jest": "^25.2.3"
+    "jest": "^25.2.3",
+    "keypress": "^0.2.1",
+    "nodemon": "^2.0.2",
+    "term-canvas": "0.0.5"
   }
 }
