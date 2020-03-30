@@ -2,13 +2,15 @@
   "name": "chip-8-emulator",
   "version": "0.0.1",
   "description": "A CHIP-8 emulator written in Node.JS",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "coverage": "npm t -- --coverage",
     "lint": "eslint src/",
     "test": "jest --verbose",
     "pretest": "npm run lint",
-    "watch": "jest --watch"
+    "watch": "jest --watch",
+
+    "build": "browserify src/connectors/canvas.connector.js -o ../chip8-frontend/canvas-connector.js; browserify src/index.js -o ../chip8-frontend/bundle.js"
   },
   "author": "",
   "license": "ISC",
