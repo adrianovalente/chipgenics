@@ -1,8 +1,9 @@
-module.exports = class Timer {
-  constructor ({ frequency, passive } = {}) {
-    this.frequency = typeof frequency !== 'undefined' ? frequency : 60
-    this.passive = (typeof passive !== 'undefined') && passive
-    this._reset()
+const DEFAULT_FREQUENCY= 10
+
+class Timer {
+  constructor (frequency = DEFAULT_FREQUENCY) {
+    this.i = 0
+    this.frequency = frequency
   }
 
   get () {
@@ -14,28 +15,24 @@ module.exports = class Timer {
     return this
   }
 
+  connect (clock) {
+    const self = this
+    clock.on('tick', () => self._tick())
+
+    return this
+  }
+
   // ---------- Exposed for testing/mocking only ---------- //
   _tick () {
-    if (this._value > 0) {
+    if (this._value > 0 && this.i++ % DEFAULT_FREQUENCY === 0) {
       this._value--
     }
   }
 
   _reset () {
-    const self = this
-
-    if (self.interval) {
-      clearInterval(self.interval)
-    }
-
-    self._value = 0
-
-    if (!self.passive) {
-      self.interval = setInterval(() => {
-        self._tick()
-      }, Math.floor(1000 / self.frequency))
-    }
-
+    this._value = 0
     return this
   }
 }
+
+module.exports = Timer

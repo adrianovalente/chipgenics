@@ -31,7 +31,6 @@ class Chip8 {
     this.timer = timer
     this.clock = clock
 
-    this.clock.reset()
     this.reset()
   }
 
@@ -54,33 +53,25 @@ class Chip8 {
     console.warn(`Execution paused, PC: 0x${this.pc.toString(16)}`)
 
     this._isRunning = false
-    this.clock.onPause()
+    this.clock.pause()
 
-    this.clock.reset()
     return this
   }
 
   play () {
     const self = this
-    if (this.debug) {
+    if (self.debug) {
       console.info(`Execution started, PC: 0x${this.pc.toString(16)}`)
     }
-    this._isRunning = true
+    self._isRunning = true
 
-    this.clock.reset()
-    this.clock.tick(() => {
+    self.clock.setCpuCycle(() => {
       if (self._isRunning) {
         self._execute()
       }
     })
 
-    /*
-    while (this._isRunning && this.memory.get(this.pc) !== 0x0000) {
-      this._isRunning && this._execute()
-    }
-    */
-
-    return this
+    return self
   }
 
   execute (n = 1) {

@@ -1,24 +1,59 @@
-module.exports = class Clock {
-  constructor (frequency = 60) {
-    this.frequency = frequency
-    this.reset()
+const EventEmitter = require('events')
+
+const CPU_CYCLES_PER_TICK = 10
+const requestAnimationFrame = global.requestAnimationFrame || (cb => global.setTimeout(cb, 0))
+
+module.exports = class Clock extends EventEmitter {
+  constructor (cyclesPerTick = CPU_CYCLES_PER_TICK) {
+    console.log({
+      cyclesPerTick,
+      requestAnimationFrame
+    })
+
+    super()
+
+    this.willAnimate = null
+    this._cpuCycle = null
+    this.cyclesPerTick = cyclesPerTick
   }
 
-  tick (fn) {
-    this.__tick = fn
+  setCyclesPerTick (cyclesPerTick) {
+    this.cyclesPerTick = cyclesPerTick
+    return this
   }
 
-  _tick () {
-    this.__tick && this.__tick()
+  setCpuCycle (fn) {
+    this._cpuCycle = fn
+    return this
   }
 
-  reset () {
+  pause () {
+    console.warn('Clock paused')
+    this.willAnimate = false
+
+    return this
+  }
+
+  start () {
+    console.warn('Clock started')
+
     const self = this
+    self.willAnimate = true
 
-    if (self._interval) {
-      clearInterval(self._interval)
-    }
+    requestAnimationFrame(function cb () {
+      for (let i = 0; i < CPU_CYCLES_PER_TICK; i++) {
+        self._cpuCycle && self._cpuCycle()
+      }
 
-    self._interval = setInterval(() => self._tick(), Math.floor(1000 / self.frequency))
+      self.emit('tick')
+
+      if (!self.willAnimate) {
+        return console.warn('Skipped animation frame because cpu is stopped.')
+      }
+
+      requestAnimationFrame(cb)
+    })
+
+    return self
   }
 }
