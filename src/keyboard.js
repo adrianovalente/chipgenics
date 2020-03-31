@@ -8,6 +8,8 @@ module.exports.ChromeKeyboard = class ChromeKeyboard {
     window.onkeydown = k => {
       self._pressedKey = k.key
       self._onKeyPress && self._onKeyPress(k.key)
+
+      self._onKeyPress = null // hate this bug
     }
 
     window.onkeyup = k => {

@@ -51,10 +51,11 @@ class Chip8 {
   }
 
   pause () {
-    if (this.debug) {
-      console.warn(`Execution paused, PC: 0x${this.pc.toString(16)}`)
-    }
+    console.warn(`Execution paused, PC: 0x${this.pc.toString(16)}`)
+
     this._isRunning = false
+    this.clock.onPause()
+
     this.clock.reset()
     return this
   }
