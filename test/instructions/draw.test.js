@@ -1,4 +1,5 @@
 const Display = require('../../src/display')
+const Clock = require('../../src/clock')
 const Memory = require('../../src/memory')
 const Chip8 = require('../../src/chip-8')
 
@@ -10,7 +11,8 @@ describe('00E0	Clear the screen', () => {
   test('There are no points on the screen after it is cleant', () => {
     const processor = new Chip8({
       memory: new Memory().loadProgram([instruction]),
-      display: new Display()
+      display: new Display(),
+      clock: new Clock()
     }).play()
 
     expect(display.render().match(/o/g)).toBeUndefined
@@ -21,12 +23,15 @@ describe('DXYN	Draw a sprite at position VX, VY with N bytes of sprite data star
   const display = new Display()
 
   const instruction = 0xd12f // Draws 0x000f = 15 bytes (3 chars) starting on pixel (v1, v2)
+  const eraseInstruction = 0xd125 // Erases number 2 from screen
   const program = [
     0x6102, // v1 = 02
     0x6202, // v2 = 02
     0xa00a, // sets I to 0x000a (position of the sprite for `2`)
 
-    instruction
+    instruction,
+
+    eraseInstruction
   ]
 
   const memory = new Memory().loadProgram(program)
@@ -42,7 +47,6 @@ describe('DXYN	Draw a sprite at position VX, VY with N bytes of sprite data star
   })
 
   test('erasing sprite for number 2', () => {
-    memory.set(processor.pc, 0xd125) // erases number 2 from screen
     processor.execute()
 
     expect(display.render()).toMatchSnapshot()

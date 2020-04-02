@@ -10,11 +10,6 @@ module.exports = class CanvasConnector {
 
     this.pixelWidth = this.width / 64
     this.pixelHeight = this.height / 32
-
-    console.log({
-      pixelWidth: this.pixelWidth,
-      pixelHeight: this.pixelHeight
-    })
   }
 
   setBitmap (bitmap) {
@@ -27,10 +22,6 @@ module.exports = class CanvasConnector {
     for (let i = 0; i < bitmap.length; i++) {
       for (let j = 0; j < bitmap[0].length; j++) {
         if (bitmap[i][j]) {
-          console.log(`Setting ${i}, ${j}`)
-          // ctx.fillRect(i * this.pixelWidth, j * this.pixelHeight, this.pixelWidth, this.pixelHeight)
-          // I am so sad this logic is inverted
-
           ctx.fillRect(j * this.pixelHeight, i * this.pixelWidth, this.pixelHeight, this.pixelWidth)
         }
       }
@@ -45,7 +36,6 @@ module.exports = class CanvasConnector {
 
     display.onClear(() => self._clear())
     display.onPixel((_x, _y, val) => {
-
       const coords = (x, y) => ({
         x: x * self.pixelWidth, y: y * self.pixelHeight, h: self.pixelWidth, w: self.pixelHeight
       })
@@ -62,7 +52,6 @@ module.exports = class CanvasConnector {
       }
 
       ctx.save()
-
     })
   }
 
@@ -72,5 +61,4 @@ module.exports = class CanvasConnector {
     ctx.clearRect(0, 0, this.width, this.height)
     ctx.save()
   }
-
 }

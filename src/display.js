@@ -39,7 +39,6 @@ module.exports = class Screen {
    * @returns `1` if the pixel is set after the operation, `0` otherwise
    */
   set (x, y) {
-    const self = this
     if (x > DISPLAY_WIDTH || y > DISPLAY_HEIGHT) {
       throw new Error(`Chip8 display is limited to ${DISPLAY_WIDTH} x ${DISPLAY_HEIGHT}`)
     }

@@ -1,4 +1,4 @@
-const DEFAULT_FREQUENCY= 2
+const DEFAULT_FREQUENCY = 2
 
 class Timer {
   constructor (frequency = DEFAULT_FREQUENCY) {

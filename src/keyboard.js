@@ -23,7 +23,6 @@ module.exports.ChromeKeyboard = class ChromeKeyboard {
 
   onKeyPress (fn) {
     this._onKeyPress.push(fn)
-
   }
 }
 

@@ -4,17 +4,13 @@ const CPU_CYCLES_PER_TICK = 20
 const requestAnimationFrame = window.requestAnimationFrame || (cb => global.setTimeout(cb, 0))
 
 module.exports = class Clock extends EventEmitter {
-  constructor (cyclesPerTick = CPU_CYCLES_PER_TICK) {
-    console.log({
-      cyclesPerTick,
-      requestAnimationFrame
-    })
-
+  constructor ({ cyclesPerTick, sync } = {}) {
     super()
 
     this.willAnimate = null
     this._cpuCycle = null
-    this.cyclesPerTick = cyclesPerTick
+    this.cyclesPerTick = typeof cyclesPerTick !== 'undefined' ? CPU_CYCLES_PER_TICK : cyclesPerTick
+    this.sync = typeof sync !== 'undefined' && sync
   }
 
   setCyclesPerTick (cyclesPerTick) {
@@ -44,7 +40,8 @@ module.exports = class Clock extends EventEmitter {
     const self = this
     self.willAnimate = true
 
-    requestAnimationFrame(function cb () {
+    const execFn = self.sync ? cb => cb() : requestAnimationFrame
+    execFn(function cb () {
       for (let i = 0; i < self.cyclesPerTick; i++) {
         self._cpuCycle && self._cpuCycle()
       }
@@ -55,7 +52,7 @@ module.exports = class Clock extends EventEmitter {
         return console.warn('Skipped animation frame because cpu is stopped.')
       }
 
-      requestAnimationFrame(cb)
+      execFn(cb)
     })
 
     return self

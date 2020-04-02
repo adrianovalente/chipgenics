@@ -103,7 +103,7 @@ class Chip8 {
 
     if (this.breakpoints.includes(this.pc) && this._isRunning) {
       console.warn(`Reached breakpoint @ 0x${this.pc.toString(16)}`)
-      cpu.pause()
+      this.pause()
 
       return this
     }
@@ -155,13 +155,11 @@ class Chip8 {
           new Array(instruction & 0x000f).fill(0).map((_, b) => this.memory.get(this.i + b))
         )
 
-
         this.registers[CHIP_8_VF_INDEX] = anyBytesWereErased ? 1 : 0
         return this._incrementProgramCounter()
 
       case OpCodes.KEYBOARD:
         switch (instruction & 0x00ff) {
-
           case 0x009e: return this._jumpIf(parseInt(this.keyboard.pressedKey(), 16) === this.registers[x])
           case 0x00a1: return this._jumpIf(parseInt(this.keyboard.pressedKey(), 16) !== this.registers[x])
 
@@ -279,6 +277,7 @@ class Chip8 {
             borrow = diff < 0
 
             this.registers[x] = borrow ? diff + 0x0100 : diff
+
             this.registers[CHIP_8_VF_INDEX] = borrow ? 0 : 1
 
             return this._incrementProgramCounter()
