@@ -1,4 +1,4 @@
-const DEFAULT_FREQUENCY= 10
+const DEFAULT_FREQUENCY= 2
 
 class Timer {
   constructor (frequency = DEFAULT_FREQUENCY) {
@@ -24,7 +24,7 @@ class Timer {
 
   // ---------- Exposed for testing/mocking only ---------- //
   _tick () {
-    if (this._value > 0 && this.i++ % DEFAULT_FREQUENCY === 0) {
+    if (this._value > 0 && this.i++ % this.frequency === 0) {
       this._value--
     }
   }

@@ -3,13 +3,13 @@ module.exports.ChromeKeyboard = class ChromeKeyboard {
     const self = this
 
     self._pressedKey = null
-    self._onKeyPress = null
+    self._onKeyPress = []
 
     window.onkeydown = k => {
       self._pressedKey = k.key
-      self._onKeyPress && self._onKeyPress(k.key)
+      self._onKeyPress.forEach(fn => fn(k.key))
 
-      self._onKeyPress = null // hate this bug
+      self._onKeyPress = [] // hate this bug
     }
 
     window.onkeyup = k => {
@@ -22,7 +22,7 @@ module.exports.ChromeKeyboard = class ChromeKeyboard {
   }
 
   onKeyPress (fn) {
-    this._onKeyPress = fn
+    this._onKeyPress.push(fn)
 
   }
 }

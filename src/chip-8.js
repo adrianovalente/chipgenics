@@ -36,6 +36,7 @@ class Chip8 {
 
   reset () {
     this._isRunning = false
+    this.breakpoints = []
     this.stack = []
 
     // Positions from 0 to 0x200 are reserved to hardcoded sprites
@@ -71,6 +72,10 @@ class Chip8 {
       }
     })
 
+    if (!self.clock.isRunning()) {
+      self.clock.start()
+    }
+
     return self
   }
 
@@ -94,6 +99,13 @@ class Chip8 {
 
     if (this.debug) {
       console.log(`PC: 0x${this.pc.toString(16)}, executing instruction: 0x${instruction.toString(16)}`)
+    }
+
+    if (this.breakpoints.includes(this.pc) && this._isRunning) {
+      console.warn(`Reached breakpoint @ 0x${this.pc.toString(16)}`)
+      cpu.pause()
+
+      return this
     }
 
     switch ((instruction & 0xf000) >> 12) {

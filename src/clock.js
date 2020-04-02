@@ -1,7 +1,7 @@
 const EventEmitter = require('events')
 
-const CPU_CYCLES_PER_TICK = 10
-const requestAnimationFrame = global.requestAnimationFrame || (cb => global.setTimeout(cb, 0))
+const CPU_CYCLES_PER_TICK = 20
+const requestAnimationFrame = window.requestAnimationFrame || (cb => global.setTimeout(cb, 0))
 
 module.exports = class Clock extends EventEmitter {
   constructor (cyclesPerTick = CPU_CYCLES_PER_TICK) {
@@ -27,6 +27,10 @@ module.exports = class Clock extends EventEmitter {
     return this
   }
 
+  isRunning () {
+    return this.willAnimate
+  }
+
   pause () {
     console.warn('Clock paused')
     this.willAnimate = false
@@ -41,7 +45,7 @@ module.exports = class Clock extends EventEmitter {
     self.willAnimate = true
 
     requestAnimationFrame(function cb () {
-      for (let i = 0; i < CPU_CYCLES_PER_TICK; i++) {
+      for (let i = 0; i < self.cyclesPerTick; i++) {
         self._cpuCycle && self._cpuCycle()
       }
 
