@@ -1,14 +1,14 @@
-const Chip8 = require('../../src/chip-8')
-const Memory = require('../../src/memory')
+const Cpu = require('../../src/components/cpu')
+const Memory = require('../../src/components/memory')
 
 describe('CPU reset', () => {
   const memory = new Memory({
     program: [0x610a, 0x5678, 0x9abc]
   })
 
-  const processor = new Chip8({
+  const processor = new Cpu({
     memory
-  }).execute().reset()
+  }).step().reset()
 
   test('should empty the stack', () => expect(processor.stack).toEqual([]))
   test('should reset the program counter', () => expect(processor.pc).toBe(0x0200))

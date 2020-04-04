@@ -1,4 +1,4 @@
-module.exports.ChromeKeyboard = class ChromeKeyboard {
+module.exports.BrowserKeyboard = class ChromeKeyboard {
   constructor () {
     const self = this
 
@@ -23,16 +23,6 @@ module.exports.ChromeKeyboard = class ChromeKeyboard {
 
   onKeyPress (fn) {
     this._onKeyPress.push(fn)
-  }
-}
-
-module.exports.Keyboard = class Keyboard {
-  pressedKey () {
-    console.warn('Unimplemented method')
-  }
-
-  onKeyPress () {
-    console.warn('Unimplemented method')
   }
 }
 

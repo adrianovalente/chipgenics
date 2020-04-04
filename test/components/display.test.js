@@ -1,4 +1,4 @@
-const Display = require('../../src/display')
+const Display = require('../../src/components/display')
 
 describe('Drawing a simple line (byte) on the screen', () => {
   const display = new Display()

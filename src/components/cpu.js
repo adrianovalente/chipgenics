@@ -87,7 +87,7 @@ class Chip8 {
     return this
   }
 
-  _step() {
+  _step () {
     const self = this
     const instruction = (this.memory.get(this.pc) << 8) | this.memory.get(this.pc + 1)
     let sum, diff, borrow // 🌈
@@ -99,6 +99,12 @@ class Chip8 {
 
     if (this.debug) {
       console.log(`PC: 0x${this.pc.toString(16)}, executing instruction: 0x${instruction.toString(16)}`)
+    }
+
+    if (instruction === 0x0000) {
+      console.warn('Execution paused because empty instruction found')
+      this.pause()
+      return this
     }
 
     if (this.breakpoints.includes(this.pc) && this._isRunning) {

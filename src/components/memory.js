@@ -46,7 +46,7 @@ module.exports = class Memory {
     return this
   }
 
-  loadProgram (program) {
+  loadProgram (program, position = 0x0200) {
     const bytes = program.reduce((acc, inst) => ([
       ...acc,
       (inst & 0xff00) >> 8,
@@ -54,7 +54,7 @@ module.exports = class Memory {
     ]), [])
 
     for (let i = 0; i < bytes.length; i++) {
-      this.bytes[0x200 + i] = bytes[i]
+      this.bytes[position + i] = bytes[i]
     }
 
     return this

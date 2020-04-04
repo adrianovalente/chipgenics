@@ -1,4 +1,4 @@
-const { MockKeyboard } = require('../../src/keyboard')
+const { MockKeyboard } = require('../../src/components/keyboard')
 const mockOnKeyPressListener = jest.fn()
 
 describe('Mock Keyboard interface', () => {

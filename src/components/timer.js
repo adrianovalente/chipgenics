@@ -3,6 +3,7 @@ const DEFAULT_FREQUENCY = 2
 class Timer {
   constructor (frequency = DEFAULT_FREQUENCY) {
     this.i = 0
+    this._value = 0
     this.frequency = frequency
   }
 

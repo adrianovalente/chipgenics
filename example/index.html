@@ -1,0 +1,22 @@
+<html>
+    <body>
+        <label for="rom">Choose a ROM:</label>
+        <input type="file" id="rom" name="rom" onchange="changeRom()">
+
+        <canvas id="myCanvas" width="640" height="320">
+        </canvas>
+    </body>
+    <script src="dist/script.js"> </script>
+
+    <style>
+     #myCanvas {
+         border:1px solid #000000;background-color: #303030;
+         position: absolute;
+         top: 50%; left: 50%; transform: translate(-50%, -50%);
+     }
+
+     body {
+         background-color: #2196f3;
+     }
+    </style>
+</html>

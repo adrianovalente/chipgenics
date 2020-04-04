@@ -9,7 +9,7 @@ module.exports = class Clock extends EventEmitter {
 
     this.willAnimate = null
     this._cpuCycle = null
-    this.cyclesPerTick = typeof cyclesPerTick !== 'undefined' ? CPU_CYCLES_PER_TICK : cyclesPerTick
+    this.cyclesPerTick = typeof cyclesPerTick === 'undefined' ? CPU_CYCLES_PER_TICK : cyclesPerTick
     this.sync = typeof sync !== 'undefined' && sync
   }
 

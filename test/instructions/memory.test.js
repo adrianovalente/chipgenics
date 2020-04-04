@@ -1,6 +1,5 @@
 const { buildChip8, buildChip8AndPlay, memorySnapshot, writeToMemory } = require('../helpers')
-
-describe('ANNN	Store memory address NNN in register I', () => {
+describe('ANNN Store memory address NNN in register I', () => {
   const instruction = 0xa123 // sets hex value 0x123 to I
   const chip8 = buildChip8AndPlay([instruction])
 
@@ -18,7 +17,7 @@ describe('FX1E  Add the value stored in register VX to register I', () => {
     instruction
   ]
 
- const chip8 = buildChip8AndPlay(program)
+  const chip8 = buildChip8AndPlay(program)
 
   test('should set register I properly', () => {
     expect(chip8.cpu.i).toBe(0x0102)
@@ -26,7 +25,7 @@ describe('FX1E  Add the value stored in register VX to register I', () => {
   })
 })
 
-describe('FX33	Store the binary-coded decimal equivalent of the value stored in register VX at addresses I, I+1, and I+2', () => {
+describe('FX33 Store the binary-coded decimal equivalent of the value stored in register VX at addresses I, I+1, and I+2', () => {
   const instruction = 0xf333 // I <~ BCD(v3)
 
   const program = [
@@ -40,7 +39,6 @@ describe('FX33	Store the binary-coded decimal equivalent of the value stored in 
   test('i is not changed', () => {
     expect(chip8.cpu.i).toBe(0x100)
   })
-
 
   test('memory is set', () => {
     expect(memorySnapshot(chip8, 0x0100, 0x0102)).toEqual([2, 5, 1])
@@ -81,7 +79,6 @@ describe('Fill registers V0 to VX inclusive with the values stored in memory sta
   const chip8 = writeToMemory(buildChip8(program), 0x0100, [0x00fa, 0x00fb, 0x00fc, 0x00fd, 0x00fe])
   chip8.cpu.step(2)
 
-
   test('registers are set', () => {
     expect(chip8.cpu.registers).toEqual([
       0x00fa, 0x00fb, 0x00fc, 0x00fd,
@@ -89,7 +86,6 @@ describe('Fill registers V0 to VX inclusive with the values stored in memory sta
       0x0000, 0x0000, 0x0000, 0x0000,
       0x0000, 0x0000, 0x0000, 0x0000
     ])
-
   })
   test('I is set to I + X + 1 after', () => {
     expect(chip8.cpu.i).toBe(0x104)
