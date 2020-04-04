@@ -23,18 +23,20 @@ const OpCodes = {
 }
 
 class Chip8 {
-  constructor ({ memory, display, keyboard, timer } = {}, { debug } = {}) {
+  constructor ({ memory, display, keyboard, timer, clock } = {}, { debug } = {}) {
     this.debug = typeof debug !== 'undefined' && debug
     this.memory = memory
     this.display = display
     this.keyboard = keyboard
     this.timer = timer
+    this.clock = clock
 
     this.reset()
   }
 
   reset () {
     this._isRunning = false
+    this.breakpoints = []
     this.stack = []
 
     // Positions from 0 to 0x200 are reserved to hardcoded sprites
@@ -49,36 +51,45 @@ class Chip8 {
   }
 
   pause () {
-    if (this.debug) {
-      console.warn(`Execution paused, PC: 0x${this.pc.toString(16)}`)
-    }
+    console.warn(`Execution paused, PC: 0x${this.pc.toString(16)}`)
+
     this._isRunning = false
+    this.clock.pause()
+
     return this
   }
 
   play () {
-    if (this.debug) {
+    const self = this
+    if (self.debug) {
       console.info(`Execution started, PC: 0x${this.pc.toString(16)}`)
     }
-    this._isRunning = true
-    while (this._isRunning && this.memory.get(this.pc) !== 0x0000) {
-      this._isRunning && this._execute()
+    self._isRunning = true
+
+    self.clock.setCpuCycle(() => {
+      if (self._isRunning) {
+        self._step()
+      }
+    })
+
+    if (!self.clock.isRunning()) {
+      self.clock.start()
     }
 
-    return this
+    return self
   }
 
-  execute (n = 1) {
+  step (n = 1) {
     for (; n > 0; n--) { // TODO find a better way to implement it
-      this._execute()
+      this._step()
     }
 
     return this
   }
 
-  _execute () {
+  _step () {
     const self = this
-    const instruction = this.memory.get(this.pc)
+    const instruction = (this.memory.get(this.pc) << 8) | this.memory.get(this.pc + 1)
     let sum, diff, borrow // 🌈
 
     const x = (instruction & 0x0f00) >> 8
@@ -88,6 +99,19 @@ class Chip8 {
 
     if (this.debug) {
       console.log(`PC: 0x${this.pc.toString(16)}, executing instruction: 0x${instruction.toString(16)}`)
+    }
+
+    if (instruction === 0x0000) {
+      console.warn('Execution paused because empty instruction found')
+      this.pause()
+      return this
+    }
+
+    if (this.breakpoints.includes(this.pc) && this._isRunning) {
+      console.warn(`Reached breakpoint @ 0x${this.pc.toString(16)}`)
+      this.pause()
+
+      return this
     }
 
     switch ((instruction & 0xf000) >> 12) {
@@ -103,7 +127,7 @@ class Chip8 {
         if (this.stack.length > STACK_LENGTH) {
           throw new Error('Stackoverflow: Max recursions reached')
         }
-        this.stack.push(this.pc + 1)
+        this.stack.push(this.pc + 2)
         this.pc = nnnValue
         return this
 
@@ -170,7 +194,6 @@ class Chip8 {
       case OpCodes.SPECIAL_OPERATORS:
         switch (nnValue) {
           case 0x0018:
-            console.warn('shhhhhhhhh')
             return this._incrementProgramCounter()
 
           case 0x0029:
@@ -260,6 +283,7 @@ class Chip8 {
             borrow = diff < 0
 
             this.registers[x] = borrow ? diff + 0x0100 : diff
+
             this.registers[CHIP_8_VF_INDEX] = borrow ? 0 : 1
 
             return this._incrementProgramCounter()
@@ -293,12 +317,12 @@ class Chip8 {
   }
 
   _incrementProgramCounter () {
-    this.pc = this.pc + 1
+    this.pc = this.pc + 2
     return this
   }
 
   _jumpIf (condition) {
-    this.pc += condition ? 2 : 1
+    this.pc += condition ? 4 : 2
     return this
   }
 }

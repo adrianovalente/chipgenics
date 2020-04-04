@@ -1,13 +1,10 @@
-const Memory = require('../../src/memory')
-const Chip8 = require('../../src/chip-8')
+const { buildChip8AndPlay } = require('../helpers')
 
-describe('6XNN	Store number NN in register VX', () => {
+describe('6XNN Store number NN in register VX', () => {
   const instruction = 0x63ab // sets value 0xab to register v3
 
-  const processor = new Chip8({
-    memory: new Memory().loadProgram([0x63ab])
-  }).execute()
+  const chip8 = buildChip8AndPlay([instruction])
 
-  test('sets value to register 3', () => expect(processor.registers[3]).toBe(0xab))
-  test('increments program counter', () => expect(processor.pc).toBe(0x0201))
+  test('sets value to register 3', () => expect(chip8.cpu.registers[3]).toBe(0xab))
+  test('increments program counter', () => expect(chip8.cpu.pc).toBe(0x0202))
 })

@@ -2,24 +2,31 @@
   "name": "chip-8-emulator",
   "version": "0.0.1",
   "description": "A CHIP-8 emulator written in Node.JS",
-  "main": "index.js",
+  "main": "src/chip8.js",
   "scripts": {
     "coverage": "npm t -- --coverage",
-    "lint": "eslint src/",
+    "lint": "eslint src/ test/",
     "test": "jest --verbose",
     "pretest": "npm run lint",
-    "watch": "jest --watch"
+    "watch": "jest --watch",
+    "clean": "rm -rf example/dist 2> /dev/null",
+    "prebuild-example": "npm run clean",
+    "build-example": "mkdir -p dist && browserify example/script.js -o example/dist/script.js",
+    "preexample": "npm run build-example",
+    "example": "http-server example/"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "browserify": "^16.5.1",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "http-server": "^0.12.1",
     "jest": "^25.2.3"
   }
 }
