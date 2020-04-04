@@ -68,7 +68,7 @@ class Chip8 {
 
     self.clock.setCpuCycle(() => {
       if (self._isRunning) {
-        self._execute()
+        self._step()
       }
     })
 
@@ -79,15 +79,15 @@ class Chip8 {
     return self
   }
 
-  execute (n = 1) {
+  step (n = 1) {
     for (; n > 0; n--) { // TODO find a better way to implement it
-      this._execute()
+      this._step()
     }
 
     return this
   }
 
-  _execute () {
+  _step() {
     const self = this
     const instruction = (this.memory.get(this.pc) << 8) | this.memory.get(this.pc + 1)
     let sum, diff, borrow // 🌈
