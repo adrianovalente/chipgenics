@@ -2,10 +2,13 @@
 <body>
   <label for="rom">Choose a ROM:</label>
   <input type="file" id="rom" name="rom" onchange="changeRom()">
-  <p>You can find ROMs of games for CHIP-8 on the Internet, for example in <a href="https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html">this website</a>
-
+  <p>You can find ROMs of games for CHIP-8 on the Internet, for example in <a href="https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html">this website</a></p>
   <canvas id="display-canvas" width="640" height="320">
   </canvas>
+  <footer class="footer">
+    by <b><a href="ghub.com/adrianovalente">@brave</a></b> under the MIT License<br>
+    <a href="github.com/adrianovalente/chipgenics">see on github</a>
+  </footer>
 </body>
 <script src="index.js"> </script>
 
@@ -18,6 +21,13 @@
 
 body {
   background-color: #2196f3;
+}
+
+footer {
+  text-align: center;
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
 }
 </style>
 </html>
