@@ -7,7 +7,7 @@
 
 [![Build Status](https://travis-ci.org/adrianovalente/chip8-emulator.svg?branch=master)](https://travis-ci.org/adrianovalente/chip8-emulator)
 [![license](https://img.shields.io/badge/licence-MIT-blue)]()
-[![Coverage Status](https://coveralls.io/repos/github/adrianovalente/chip8-emulator/badge.svg)](https://coveralls.io/github/adrianovalente/chip8-emulator)
+[![Coverage Status](https://coveralls.io/repos/github/adrianovalente/chipgenics/badge.svg?branch=master)](https://coveralls.io/github/adrianovalente/chipgenics?branch=master)
 
 **chipgenics** is my homemade implementation of a CHIP-8 Virtual Machine running 100% on Javascript. It can be used as the core code for web, mobile or even terminal-made applications. A live demo is available on **[chipgenics.site](https://chipgenics.site)**.
 
