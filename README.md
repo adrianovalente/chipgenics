@@ -1,67 +1,53 @@
-# CHIP-8 Emulator
+<p align="center">
+<img src="docs/img/readme.png"/>
+<h2 align="center">chipgenics</h2>
+</p>
+
+> Quarantine day 22: _"I think I'm gonna write a hardware emulator"_
 
 [![Build Status](https://travis-ci.org/adrianovalente/chip8-emulator.svg?branch=master)](https://travis-ci.org/adrianovalente/chip8-emulator)
+[![license](https://img.shields.io/badge/licence-MIT-blue)]()
+[![Coverage Status](https://coveralls.io/repos/github/adrianovalente/chip8-emulator/badge.svg)](https://coveralls.io/github/adrianovalente/chip8-emulator)
 
-> Hardware Emulation has always fascinated me.
+**chipgenics** is my homemade implementation of a CHIP-8 Virtual Machine running 100% on Javascript. It can be used as the core code for web, mobile or even terminal-made applications. A live demo is available on **[chipgenics.site](https://chipgenics.site)**.
 
-As a lot of people say that [CHIP-8](https://en.wikipedia.org/wiki/CHIP-8) is an easy system to get started writing emulators, I decided to accept the challenge.
+### What is CHIP-8?
+CHIP-8 is a interpreted programming language developed by [Joseph Weisbecker](https://en.wikipedia.org/wiki/Joseph_Weisbecker) during the decade of the 1970's. A lot of famous games have their version for CHIP-8, such as Space Invaders, Tetris and others.
 
-## Instructions
-- [ ] ~0NNN Execute machine language subroutine at address NNN~
-- [x] 00E0 Clear the screen
-- [x] 00EE Return from a subroutine
-- [x] 1NNN Jump to address NNN
-- [x] 2NNN Execute subroutine starting at address NNN
-- [x] 3XNN Skip the following instruction if the value of register VX equals NN
-- [x] 4XNN Skip the following instruction if the value of register VX is not equal to NN
-- [x] 5XY0 Skip the following instruction if the value of register VX is equal to the value of register VY
-- [x] 6XNN Store number NN in register VX
-- [x] 7XNN Add the value NN to register VX
-- [x] 8XY0 Store the value of register VY in register VX
-- [x] 8XY1 Set VX to VX OR VY
-- [x] 8XY2 Set VX to VX AND VY
-- [x] 8XY3 Set VX to VX XOR VY
-- [x] 8XY4 Add the value of register VY to register VX
-  Set VF to 01 if a carry occurs
-  Set VF to 00 if a carry does not occur
-- [x] 8XY5 Subtract the value of register VY from register VX
-  Set VF to 00 if a borrow occurs
-  Set VF to 01 if a borrow does not occur
-- [x] 8XY6 Store the value of register VY shifted right one bit in register VX
-  Set register VF to the least significant bit prior to the shift
-- [x] 8XY7 Set register VX to the value of VY minus VX
-  Set VF to 00 if a borrow occurs
-  Set VF to 01 if a borrow does not occur
-- [x] 8XYE Store the value of register VY shifted left one bit in register VX
-  Set register VF to the most significant bit prior to the shift
-- [x] 9XY0 Skip the following instruction if the value of register VX is not equal to the value of register VY
-- [x] ANNN Store memory address NNN in register I
-- [x] BNNN Jump to address NNN + V0
-- [x] CXNN Set VX to a random number with a mask of NN
-- [x] DXYN Draw a sprite at position VX, VY with N bytes of sprite data starting at the address stored in I
-  Set VF to 01 if any set pixels are changed to unset, and 00 otherwise
-- [x] EX9E Skip the following instruction if the key corresponding to the hex value currently stored in register VX is pressed
-- [x] EXA1 Skip the following instruction if the key corresponding to the hex value currently stored in register VX is not pressed
-- [x] FX07 Store the current value of the delay timer in register VX
-- [x] FX0A Wait for a keypress and store the result in register VX
-- [x] FX15 Set the delay timer to the value of register VX
-- [ ] FX18 Set the sound timer to the value of register VX
-- [x] FX1E Add the value stored in register VX to register I
-- [x] FX29 Set I to the memory address of the sprite data corresponding to the hexadecimal digit stored in register VX
-- [x] FX33 Store the binary-coded decimal equivalent of the value stored in register VX at addresses I, I+1, and I+2
-- [x] FX55 Store the values of registers V0 to VX inclusive in memory starting at address I
-  I is set to I + X + 1 after operation
-- [x] FX65 Fill registers V0 to VX inclusive with the values stored in memory starting at address I
-  I is set to I + X + 1 after operation
+### The architecture
+CHIP-8 was designed to have a very simple implementation. The processor has 16 single-byte registers and a special 2-bytes register called I, used to store memory addresses. Most implementations had a memory of 4096 positions. The processor also had a program counter and a stack pointer which allowed up to eight recursive subroutine calls. This project implements the CHIP-8 in its original architecture, component by component.
 
-## Contributing
+### Instruction Set
+The CHIP-8 had a instruction set composed by 48 instructions, including arithmetic and boolean operations, logical jumps, subroutines and a special instruction to draw points in the screen. The complete CHIP-8 instruction set can be found [here](http://mattmik.com/files/chip8/mastering/chip8.html).
 
-Although contributions are always welcome, this project is still under initial setup.
+### Stop talking, show me the code
+After cloning this project and installing the dependencies, you can use the emulator core code requiring the main file under `src/chip8`.
 
-![](http://24.media.tumblr.com/tumblr_m3x648wxbj1ru99qvo1_500.png)
+``` javascript
+const Chip8 = require('src/chip8')
 
-## Some inspiration
+const program = [
+  0x00e0 // Clears the screen
+  0x6102, // v1 = 02
+  0x6202, // v2 = 02
+  0xa00a, // sets I to 0x000a (position of the sprite for `2`)
 
-- [Mastering CHIP-8](http://mattmik.com/files/chip8/mastering/chip8.html)
-- [Michael Fogleman's post on medium about his NES emulator](https://medium.com/@fogleman/i-made-an-nes-emulator-here-s-what-i-learned-about-the-original-nintendo-2e078c9b28fe)
-- [This awesome youtube series about the Nintendo Game Boy](https://www.youtube.com/watch?v=RZUDEaLa5Nw)
+  0xd125  // draws the number "2" on the screen
+]
+
+const chip8 = new Chip8({
+  memory: {
+    program
+  }
+}).start()
+
+console.log(chip8.display.render())
+// => this will log the rendered screen on the output
+
+```
+
+Alternatively you can also load a program directly from a ROM using the `loadProgram` method from the `Chip8.Memory` class.
+
+### Known issues
+- The sound timer is still not implemented.
+- There is an issue in ~at least~ one implemented instruction. I can tell it by playing `Space Invaders` and killing an invader, you will see that some unexpected things happen then.
