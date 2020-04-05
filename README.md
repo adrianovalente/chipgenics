@@ -9,10 +9,15 @@
 [![license](https://img.shields.io/badge/licence-MIT-blue)]()
 [![Coverage Status](https://coveralls.io/repos/github/adrianovalente/chipgenics/badge.svg?branch=master)](https://coveralls.io/github/adrianovalente/chipgenics?branch=master)
 
-**chipgenics** is my homemade implementation of a CHIP-8 Virtual Machine running 100% on Javascript. It can be used as the core code for web, mobile or even terminal-made applications. A live demo is available on **[chipgenics.site](https://chipgenics.site)**.
+**chipgenics** is my homemade implementation of a CHIP-8 Virtual Machine running 100% on Javascript. It can be used as the core code for web, mobile or even terminal-made applications. A live demo is available on **[chipgenics.site](http://chipgenics.site)**.
 
 ### What is CHIP-8?
 CHIP-8 is a interpreted programming language developed by [Joseph Weisbecker](https://en.wikipedia.org/wiki/Joseph_Weisbecker) during the decade of the 1970's. A lot of famous games have their version for CHIP-8, such as Space Invaders, Tetris and others.
+
+<p align="center">
+<img src="docs/img/invaders.png" width="70%"/>
+</p>
+<p align="center">Screenshot of the game Space Invaders as developed by David Winter running on <b>chipgenics</b></p>
 
 ### The architecture
 CHIP-8 was designed to have a very simple implementation. The processor has 16 single-byte registers and a special 2-bytes register used to store memory addresses. Most implementations had a memory of 4096 positions. The processor also had a program counter and a stack pointer which allowed up to eight recursive subroutine calls. This project implements the CHIP-8 in its original architecture, component by component.
@@ -50,4 +55,4 @@ Alternatively you can also load a program directly from a ROM using the `loadPro
 
 ### Known issues
 - The sound timer is still not implemented.
-- There is an issue in ~at least~ one implemented instruction. I can tell it by playing `Space Invaders` and killing an invader, you will see that some unexpected things happen then.
+- There is an issue in ~at least~ one implemented instruction. You can tell it by playing `Space Invaders` firing a bullet, you will see that some unexpected things happen then. I will totally pay you a beer if you can find it :)
