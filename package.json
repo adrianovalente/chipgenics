@@ -10,17 +10,13 @@
     "test": "jest --verbose",
     "pretest": "npm run lint",
     "watch": "jest --watch",
-    "clean": "rm -rf example/dist 2> /dev/null",
-    "prebuild-example": "npm run clean",
-    "build-example": "mkdir -p dist && browserify example/script.js -o example/dist/script.js",
-    "preexample": "npm run build-example",
-    "example": "http-server example/"
+    "build-website": "/bin/bash website/build.sh",
+    "serve-website": "http-server website/dist/"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Adriano Valente",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "browserify": "^16.5.1",
     "coveralls": "^3.0.11",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
@@ -29,6 +25,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "http-server": "^0.12.1",
-    "jest": "^25.2.3"
+    "jest": "^25.2.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   }
 }
