@@ -1,0 +1,23 @@
+<html>
+<body>
+  <label for="rom">Choose a ROM:</label>
+  <input type="file" id="rom" name="rom" onchange="changeRom()">
+  <p>You can find ROMs of games for CHIP-8 on the Internet, for example in <a href="https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html">this website</a>
+
+  <canvas id="display-canvas" width="640" height="320">
+  </canvas>
+</body>
+<script src="index.js"> </script>
+
+<style>
+#display-canvas {
+  border:1px solid #000000;background-color: #303030;
+  position: absolute;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+
+body {
+  background-color: #2196f3;
+}
+</style>
+</html>

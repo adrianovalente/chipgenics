@@ -15,7 +15,7 @@
 CHIP-8 is a interpreted programming language developed by [Joseph Weisbecker](https://en.wikipedia.org/wiki/Joseph_Weisbecker) during the decade of the 1970's. A lot of famous games have their version for CHIP-8, such as Space Invaders, Tetris and others.
 
 ### The architecture
-CHIP-8 was designed to have a very simple implementation. The processor has 16 single-byte registers and a special 2-bytes register called I, used to store memory addresses. Most implementations had a memory of 4096 positions. The processor also had a program counter and a stack pointer which allowed up to eight recursive subroutine calls. This project implements the CHIP-8 in its original architecture, component by component.
+CHIP-8 was designed to have a very simple implementation. The processor has 16 single-byte registers and a special 2-bytes register used to store memory addresses. Most implementations had a memory of 4096 positions. The processor also had a program counter and a stack pointer which allowed up to eight recursive subroutine calls. This project implements the CHIP-8 in its original architecture, component by component.
 
 ### Instruction Set
 The CHIP-8 had a instruction set composed by 48 instructions, including arithmetic and boolean operations, logical jumps, subroutines and a special instruction to draw points in the screen. The complete CHIP-8 instruction set can be found [here](http://mattmik.com/files/chip8/mastering/chip8.html).
