@@ -2,8 +2,15 @@ language: node_js
 sudo: false
 
 node_js:
-  - 10.16.3
+- 10.16.3
 
 branches:
   only:
   - master
+
+script: npm i && COVERALLS_GIT_BRANCH=$TRAVIS_BRANCH npm run report-coverage
+
+env:
+  global:
+    secure: aVjqAX/QZrJ2ovcePXJrqkfrsufvd3s435ZHSYhbKsgnN3HNKAhlOFAkzwzwyTdaNMVCbnDuXS02sWUUSDeiG4haUpi4yaH4t64gVV2Gh9J/cVvirNd88UkFN502B/Z2T56lpHFOj44jh/HcvVRbR1Ejp7JNbmbZ4a8CWiFSLa3JdvxH35BBv6rM7frgaQcLPd2ZO7r4JN1DGlVm0eqaiSiSmALGQ0OnvbxPS4Pj5ZW4YoW15jDluJcba+7070zICxwUZRl5yG8XR9CYA5Xlya4H4CS/zjPww06o83dedhBS5JyaQIkq/dCz2tAx5bSodAcBgm86saMTZQN83qzS3fqaMB7Pu5EYGkq7m2bxbdF3jC4Zcxwxro+fxBAzZnzV8ujjgejqEYBOb1N8dJGNCKpsy8lGzcIEjiYL7QnGSILLBbGNXMEfjImGuROH+ntQEg/Hi73y7DLclUsfH/qRGNme6Q/PCVnyUfNXaHv45zJ0fqDKxHWNKg/zHTGkeEzGXKMaXJLQXzAByJCTgzSzaotTdjMawXckMfeF0pRyv3oaxUZLHFSufojSlG5KUJcVvVMQQYV1EAzfGZijQhvgSwqViQbl0c81S6PBB5mfKdyipGPERzUr4QgU27B4b12BZ3BebaGX4XfukMdcKntMiZ9OSinH6zIYHhsiMa/uSi4=
+
