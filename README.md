@@ -32,7 +32,7 @@ After cloning this project and installing the dependencies, you can use the emul
 const Chip8 = require('src/chip8')
 
 const program = [
-  0x00e0 // Clears the screen
+  0x00e0, // Clears the screen
   0x6102, // v1 = 02
   0x6202, // v2 = 02
   0xa00a, // sets I to 0x000a (position of the sprite for `2`)
