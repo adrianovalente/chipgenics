@@ -1,5 +1,6 @@
 const Chip8 = require('../../src/chip8')
 const Canvas = require('../../src/connectors/canvas.connector')
+const { setupSelect, setupFile } = require('./select')
 
 ;(async function main () {
   const chip8 = new Chip8({
@@ -8,26 +9,19 @@ const Canvas = require('../../src/connectors/canvas.connector')
     }
   })
 
-  const canvas = new Canvas(document.getElementById("display-canvas"))
+  const canvas = new Canvas(document.getElementById('display-canvas'))
   chip8.connectToDisplay(canvas)
 
-  global.changeRom = function changeRom() {
-    var file = document.querySelector('#rom').files[0];
-    var reader  = new FileReader();
+  setupSelect(document.getElementById('predefined-rom'), (_, byteArray) => loadGame(byteArray))
+  setupFile(document.getElementById('rom'), (_, byteArray) => loadGame(byteArray))
 
-    reader.onloadend = function () {
-      chip8.reset()
-      chip8.write(0x0200, new Uint8Array(reader.result))
-      chip8.play()
-    }
-
-    if (file) {
-      reader.readAsArrayBuffer(file);
-    } else {
-      alert('Did not found any file!')
-    }
-  }
-
-  // 🚢
+  // sorry 🚢
   global.chip8 = chip8
 })()
+
+function loadGame (byteArray) {
+  console.log(byteArray)
+  chip8.reset()
+  chip8.write(0x200, new Uint8Array(byteArray))
+  chip8.play()
+}

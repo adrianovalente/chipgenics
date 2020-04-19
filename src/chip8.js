@@ -48,7 +48,8 @@ module.exports = class {
     return ({
       ...this,
       cpu: this.cpu.reset(),
-      memory: this.memory.reset()
+      memory: this.memory.reset(),
+      display: this.display.reset()
 
       // what else should be reset?
     })

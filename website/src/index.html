@@ -1,7 +1,9 @@
 <html>
 <body>
   <label for="rom">Choose a ROM:</label>
-  <input type="file" id="rom" name="rom" onchange="changeRom()">
+  <input type="file" id="rom" name="rom">
+  </p>Or select one of the following: <select id="predefined-rom"></select>
+  </p>
   <p>You can find ROMs of games for CHIP-8 on the Internet, for example in <a href="https://www.zophar.net/pdroms/chip8/chip-8-games-pack.html">this website</a></p>
   <p>The joystick input is mapped to the hexadecimal keys on the keyboard [a-f0-9]. </p>
   <canvas id="display-canvas" width="640" height="320">
