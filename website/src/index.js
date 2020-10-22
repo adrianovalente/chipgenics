@@ -23,5 +23,5 @@ function loadGame (byteArray) {
   console.log(byteArray)
   chip8.reset()
   chip8.write(0x200, new Uint8Array(byteArray))
-  chip8.play()
+//  chip8.play()
 }

@@ -23,6 +23,9 @@ module.exports = class {
       memory: self.memory,
       timer: self.timer
     })
+
+    self.cpu.debug = true
+    self.clock.pause()
   }
 
   step (n) {

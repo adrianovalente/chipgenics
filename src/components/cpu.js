@@ -36,7 +36,12 @@ class Chip8 {
 
   reset () {
     this._isRunning = false
-    this.breakpoints = []
+    this.breakpoints = [
+      0x295, // shot fired
+      0x2b3  // killed a monster
+
+
+    ]
     this.stack = []
 
     // Positions from 0 to 0x200 are reserved to hardcoded sprites
@@ -82,6 +87,10 @@ class Chip8 {
   step (n = 1) {
     for (; n > 0; n--) { // TODO find a better way to implement it
       this._step()
+    }
+
+    if (this.debug) {
+      console.log(`PC now is at 0x${this.pc.toString(16)}`)
     }
 
     return this
@@ -165,6 +174,7 @@ class Chip8 {
         return this._incrementProgramCounter()
 
       case OpCodes.KEYBOARD:
+
         switch (instruction & 0x00ff) {
           case 0x009e: return this._jumpIf(parseInt(this.keyboard.pressedKey(), 16) === this.registers[x])
           case 0x00a1: return this._jumpIf(parseInt(this.keyboard.pressedKey(), 16) !== this.registers[x])

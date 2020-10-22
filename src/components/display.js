@@ -65,6 +65,7 @@ module.exports = class Screen {
    * @returns `true` if any pixel was changed to unset
    */
   drawByte (x, y, byte) {
+    console.log(`Draw byte x: ${x.toString(16)}, y: ${y.toString(16)}, byte: ${byte.toString(16)}`)
     let i = 0; let anyPixelsWereUnset = false
     for (let mask = 0b10000000; mask > 0; mask = mask >> 1) {
       if (mask & byte) {
